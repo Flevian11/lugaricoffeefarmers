@@ -919,7 +919,7 @@
                         <div class="text-2xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Integration</div>
                     </div>
                     <div class="space-y-0.5">
-                        <a href="ussd/index.php" target="_blank"
+                        <a href="ussd/index.html" target="_blank"
                             class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
                             <i class="fas fa-mobile-alt text-sm w-5"></i>
                             <span class="text-sm font-medium">USSD Services</span>
@@ -987,7 +987,7 @@
             <div class="p-4 border-t border-slate-200/50 dark:border-slate-800/50">
                 <button class="w-full flex items-center justify-center space-x-2 px-3 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-slate-700 dark:text-slate-300 text-sm font-medium transition-colors group">
                     <i class="fas fa-sign-out-alt text-sm"></i>
-                    <span><a href="index.php">Sign Out</a></span>
+                    <span><a href="index.html">Sign Out</a></span>
                 </button>
             </div>
         </aside>
@@ -1133,7 +1133,7 @@
                                         <span>Help Center</span>
                                     </a>
                                     <div class="border-t border-slate-200 dark:border-slate-700 my-2"></div>
-                                    <a href="index.php"
+                                    <a href="index.html"
                                         class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors text-sm">
                                         <i class="fas fa-sign-out-alt text-sm w-5"></i>
                                         <span>Sign Out</span>
@@ -3358,7 +3358,7 @@
                 if (confirm('Are you sure you want to sign out?')) {
                     showNotification('Signed Out', 'You have been successfully signed out', 'success');
                     setTimeout(() => {
-                        window.location.href = 'index.php';
+                        window.location.href = 'index.html';
                     }, 1500);
                 }
             });
@@ -3907,5 +3907,6 @@ window.processQRResult = function(data) {
 </script>
 
 </body>
+
 
 </html>
