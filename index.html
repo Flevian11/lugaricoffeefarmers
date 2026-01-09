@@ -191,7 +191,7 @@
                     <a href="#how-it-works" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">How It Works</a>
                     <a href="#testimonials" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Success Stories</a>
                     <a href="#pricing" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Pricing</a>
-                    <a href="dashboard.php" class="px-6 py-2 bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-lg transition-colors">Dashboard Demo</a>
+                    <a href="dashboard.html" class="px-6 py-2 bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-lg transition-colors">Dashboard Demo</a>
                 </div>
                 
                 <!-- Mobile Menu Button -->
@@ -207,7 +207,7 @@
                     <a href="#how-it-works" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">How It Works</a>
                     <a href="#testimonials" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Success Stories</a>
                     <a href="#pricing" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Pricing</a>
-                    <a href="dashboard.php" class="px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-lg transition-colors text-center">Dashboard Demo</a>
+                    <a href="dashboard.html" class="px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-lg transition-colors text-center">Dashboard Demo</a>
                 </div>
             </div>
         </div>
@@ -984,7 +984,7 @@
                         </div>
                     </a>
                     
-                    <a href="dashboard.php" 
+                    <a href="dashboard.html" 
                        class="px-8 py-4 bg-white text-primary-600 hover:bg-gray-100 font-semibold rounded-xl transition-colors flex items-center justify-center">
                         <i class="fas fa-desktop text-2xl mr-3"></i>
                         <div class="text-left">
@@ -1031,7 +1031,7 @@
                 <div>
                     <h4 class="text-lg font-bold mb-6">Platform</h4>
                     <ul class="space-y-3">
-                        <li><a href="dashboard.php" class="text-gray-400 hover:text-white transition-colors">Dashboard Demo</a></li>
+                        <li><a href="dashboard.html" class="text-gray-400 hover:text-white transition-colors">Dashboard Demo</a></li>
                         <li><a href="#features" class="text-gray-400 hover:text-white transition-colors">Features</a></li>
                         <li><a href="#how-it-works" class="text-gray-400 hover:text-white transition-colors">How It Works</a></li>
                         <li><a href="#pricing" class="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
@@ -1257,7 +1257,7 @@
         });
         
         // Dashboard demo button
-        const dashboardButtons = document.querySelectorAll('a[href="dashboard.php"]');
+        const dashboardButtons = document.querySelectorAll('a[href="dashboard.html"]');
         dashboardButtons.forEach(button => {
             button.addEventListener('click', function(e) {
                 if (!this.getAttribute('target') || this.getAttribute('target') !== '_blank') {
@@ -1268,7 +1268,7 @@
                     
                     // Simulate loading
                     setTimeout(() => {
-                        window.location.href = 'dashboard.php';
+                        window.location.href = 'dashboard.html';
                     }, 1000);
                 }
             });
@@ -1538,3 +1538,4 @@
 </body>
 
 </html>
+
