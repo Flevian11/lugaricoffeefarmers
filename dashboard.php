@@ -1,0 +1,3911 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lugari Coffee Platform • AI-Powered Farmer Dashboard</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/2615.png">
+
+    <!-- Tailwind CSS with Custom Coffee Theme -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#fef7ec',
+                            100: '#fdeed9',
+                            200: '#fbddb3',
+                            300: '#f9cc8d',
+                            400: '#f7bb67',
+                            500: '#8B4513', // Saddle Brown - Coffee main
+                            600: '#6d3610',
+                            700: '#4f280c',
+                            800: '#311907',
+                            900: '#130903',
+                        },
+                        secondary: {
+                            50: '#f0f9f0',
+                            100: '#daf3da',
+                            200: '#b5e7b5',
+                            300: '#90db90',
+                            400: '#6bcf6b',
+                            500: '#2E8B57', // Sea Green - Coffee leaf
+                            600: '#256f46',
+                            700: '#1c5334',
+                            800: '#133723',
+                            900: '#0a1b11',
+                        },
+                        accent: {
+                            50: '#fffaf0',
+                            100: '#fff5e1',
+                            200: '#ffebc2',
+                            300: '#ffe0a3',
+                            400: '#ffd684',
+                            500: '#D2691E', // Chocolate - Coffee bean
+                            600: '#a85418',
+                            700: '#7e3f12',
+                            800: '#54290c',
+                            900: '#2a1406',
+                        },
+                        coffee: {
+                            light: '#F5DEB3', // Wheat
+                            medium: '#8B4513', // Saddle Brown
+                            dark: '#3D2B1F', // Dark Brown
+                            bean: '#5D4037',
+                            leaf: '#2E8B57',
+                            cherry: '#DC143C',
+                        },
+                        slate: {
+                            850: '#1e293b',
+                            950: '#0f172a',
+                        }
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'system-ui', 'sans-serif'],
+                        'system': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif']
+                    },
+                    fontSize: {
+                        '2xs': '0.625rem',
+                        '3xs': '0.5rem',
+                    },
+                    spacing: {
+                        '18': '4.5rem',
+                        '88': '22rem',
+                        '128': '32rem',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'slide-in': 'slideIn 0.3s ease-out',
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'ripple': 'ripple 1.5s linear infinite',
+                        'gradient': 'gradient 3s ease infinite',
+                        'shimmer': 'shimmer 2s infinite',
+                        'slide-up': 'slideUp 0.4s ease-out',
+                        'bean-float': 'beanFloat 8s ease-in-out infinite',
+                        'pulse-green': 'pulseGreen 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': {
+                                transform: 'translateY(0)'
+                            },
+                            '50%': {
+                                transform: 'translateY(-10px)'
+                            },
+                        },
+                        beanFloat: {
+                            '0%, 100%': {
+                                transform: 'translateY(0) rotate(0deg)'
+                            },
+                            '33%': {
+                                transform: 'translateY(-15px) rotate(120deg)'
+                            },
+                            '66%': {
+                                transform: 'translateY(-8px) rotate(240deg)'
+                            },
+                        },
+                        pulseGreen: {
+                            '0%, 100%': {
+                                opacity: 1
+                            },
+                            '50%': {
+                                opacity: 0.7
+                            },
+                        },
+                        slideIn: {
+                            '0%': {
+                                transform: 'translateX(-100%)'
+                            },
+                            '100%': {
+                                transform: 'translateX(0)'
+                            },
+                        },
+                        fadeIn: {
+                            '0%': {
+                                opacity: '0'
+                            },
+                            '100%': {
+                                opacity: '1'
+                            },
+                        },
+                        ripple: {
+                            '0%': {
+                                transform: 'scale(0.8)',
+                                opacity: '1'
+                            },
+                            '100%': {
+                                transform: 'scale(2.4)',
+                                opacity: '0'
+                            },
+                        },
+                        gradient: {
+                            '0%, 100%': {
+                                backgroundPosition: '0% 50%'
+                            },
+                            '50%': {
+                                backgroundPosition: '100% 50%'
+                            },
+                        },
+                        shimmer: {
+                            '0%': {
+                                backgroundPosition: '-1000px 0'
+                            },
+                            '100%': {
+                                backgroundPosition: '1000px 0'
+                            },
+                        },
+                        slideUp: {
+                            '0%': {
+                                transform: 'translateY(100%)',
+                                opacity: '0'
+                            },
+                            '100%': {
+                                transform: 'translateY(0)',
+                                opacity: '1'
+                            },
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+                        'grid-pattern': 'linear-gradient(to right, #e5e7eb 1px, transparent 1px), linear-gradient(to bottom, #e5e7eb 1px, transparent 1px)',
+                        'coffee-beans': 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%238B4513\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                    }
+                }
+            },
+            plugins: [
+                function({
+                    addUtilities
+                }) {
+                    addUtilities({
+                        '.text-tiny': {
+                            'font-size': '0.625rem',
+                            'line-height': '1rem',
+                        },
+                        '.text-micro': {
+                            'font-size': '0.5rem',
+                            'line-height': '0.75rem',
+                        },
+                        '.glass': {
+                            'background': 'rgba(255, 255, 255, 0.7)',
+                            'backdrop-filter': 'blur(10px)',
+                            '-webkit-backdrop-filter': 'blur(10px)',
+                        },
+                        '.glass-dark': {
+                            'background': 'rgba(15, 23, 42, 0.7)',
+                            'backdrop-filter': 'blur(10px)',
+                            '-webkit-backdrop-filter': 'blur(10px)',
+                        },
+                        '.hide-scrollbar': {
+                            '-ms-overflow-style': 'none',
+                            'scrollbar-width': 'none',
+                        },
+                        '.hide-scrollbar::-webkit-scrollbar': {
+                            'display': 'none',
+                        },
+                        '.gradient-border': {
+                            'border': 'double 2px transparent',
+                            'background-image': 'linear-gradient(white, white), linear-gradient(135deg, #8B4513, #2E8B57)',
+                            'background-origin': 'border-box',
+                            'background-clip': 'padding-box, border-box',
+                        },
+                        '.gradient-text': {
+                            'background': 'linear-gradient(135deg, #8B4513 0%, #2E8B57 100%)',
+                            '-webkit-background-clip': 'text',
+                            '-webkit-text-fill-color': 'transparent',
+                            'background-clip': 'text',
+                        },
+                        '.card-hover': {
+                            'transition': 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                            'transform': 'translateY(0)',
+                        },
+                        '.card-hover:hover': {
+                            'transform': 'translateY(-4px)',
+                            'box-shadow': '0 20px 40px rgba(0, 0, 0, 0.1)',
+                        },
+                        '.animate-gradient': {
+                            'background-size': '200% 200%',
+                            'animation': 'gradient 3s ease infinite',
+                        },
+                        '.coffee-bean': {
+                            'background': 'radial-gradient(circle at 30% 30%, #8B4513, #5D4037)',
+                            'border-radius': '40% 60% 60% 40% / 70% 50% 50% 30%',
+                        }
+                    })
+                }
+            ]
+        }
+    </script>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- FullCalendar -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet'>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+
+    <!-- Luxon for Date Handling -->
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.2.1/build/global/luxon.min.js"></script>
+
+    <!-- Leaflet for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #8B4513 0%, #2E8B57 100%);
+            --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 20px 40px rgba(0, 0, 0, 0.04);
+            --hover-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            letter-spacing: -0.011em;
+            background-color: #fef7ec;
+        }
+
+        .dark body {
+            background-color: #130903;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(139, 69, 19, 0.05);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #8B4513, #2E8B57);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #6d3610, #256f46);
+        }
+
+        /* Selection */
+        ::selection {
+            background: rgba(139, 69, 19, 0.2);
+            color: #1e293b;
+        }
+
+        /* Focus States */
+        .focus-ring {
+            @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white;
+        }
+
+        .dark .focus-ring {
+            @apply focus:ring-offset-slate-900;
+        }
+
+        /* Loading Animation */
+        .loading-dots {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .loading-dots span {
+            animation: loading 1.4s infinite both;
+            background-color: currentColor;
+            border-radius: 50%;
+            display: inline-block;
+            height: 4px;
+            margin: 0 1px;
+            width: 4px;
+        }
+
+        .loading-dots span:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .loading-dots span:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes loading {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        /* Ripple Effect */
+        .ripple-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            position: absolute;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Coffee Bean Animation */
+        .coffee-bean-animation {
+            animation: beanFloat 8s ease-in-out infinite;
+        }
+
+        /* Leaf Animation */
+        .leaf-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Coffee Cherry Animation */
+        .cherry-animation {
+            animation: pulseGreen 2s ease-in-out infinite;
+        }
+
+        /* Farmer Card Styles */
+        .farmer-card {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.05), rgba(46, 139, 87, 0.05));
+            border: 1px solid rgba(139, 69, 19, 0.1);
+        }
+
+        .dark .farmer-card {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(46, 139, 87, 0.1));
+            border: 1px solid rgba(139, 69, 19, 0.2);
+        }
+
+        /* Farm Map Styles */
+        #farmMap {
+            min-height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .dark #farmMap {
+            filter: brightness(0.8) contrast(1.2);
+        }
+
+        /* Supply Chain Status */
+        .supply-chain-step {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .supply-chain-step::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #e5e7eb;
+        }
+
+        .supply-chain-step.completed::before {
+            background: #2E8B57;
+        }
+
+        .supply-chain-step.active::before {
+            background: #8B4513;
+            animation: pulse 2s infinite;
+        }
+
+        /* Weather Card */
+        .weather-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .dark .weather-card {
+            background: linear-gradient(135deg, #4c51bf 0%, #6b46c1 100%);
+        }
+
+        /* Price Chart */
+        .price-up {
+            color: #2E8B57;
+        }
+
+        .price-down {
+            color: #DC143C;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .mobile-stack {
+                flex-direction: column !important;
+            }
+
+            .mobile-full {
+                width: 100% !important;
+            }
+
+            #sidebar {
+                width: 280px;
+            }
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 4px;
+            background: linear-gradient(135deg, #ff4757, #ff6b6b);
+            color: white;
+            font-size: 0.5rem;
+            font-weight: 700;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        .dark .notification-badge {
+            border-color: #0f172a;
+        }
+
+        /* QR Code Display */
+        .qr-code-container {
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .dark .qr-code-container {
+            background: #1e293b;
+        }
+
+        /* Calendar Custom */
+        .fc-event {
+            border: none !important;
+            border-radius: 6px !important;
+            padding: 2px 6px !important;
+            margin: 1px 0 !important;
+            font-size: 0.75rem !important;
+            font-weight: 500 !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .fc-event:hover {
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        /* Chat Message Animation */
+        .chat-message {
+            animation: slideUp 0.3s ease-out;
+        }
+
+        /* Animation for Coffee Processing */
+        @keyframes processing {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .processing-animation {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .processing-animation::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 69, 19, 0.2), transparent);
+            animation: processing 2s infinite;
+        }
+
+        /* Dark Mode Fixes */
+        .dark .bg-white {
+            background-color: #0f172a !important;
+        }
+
+        .dark .text-slate-800 {
+            color: #f1f5f9 !important;
+        }
+
+        .dark .text-slate-600 {
+            color: #cbd5e1 !important;
+        }
+
+        .dark .border-slate-200 {
+            border-color: #334155 !important;
+        }
+
+        /* Section Backgrounds */
+        .section-bg {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238B4513' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Add to your existing CSS section */
+        #qrScanner {
+            background: #000;
+        }
+
+        .farm-marker {
+            background: transparent !important;
+            border: none !important;
+        }
+
+        /* Camera overlay */
+        .camera-overlay {
+            position: relative;
+        }
+
+        .camera-overlay::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border: 2px dashed rgba(139, 69, 19, 0.5);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        /* Loading animation for QR scan */
+        .qr-scanning {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .qr-scanning::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #8B4513, transparent);
+            animation: scanning 2s infinite;
+        }
+
+        @keyframes scanning {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+    </style>
+</head>
+
+<body class="font-inter bg-coffee-light text-coffee-dark dark:bg-coffee-dark dark:text-coffee-light transition-colors duration-200 section-bg">
+    <!-- Loading Screen -->
+    <div id="loadingScreen"
+        class="fixed inset-0 z-[9999] bg-coffee-light dark:bg-coffee-dark flex items-center justify-center transition-opacity duration-500">
+        <div class="text-center">
+            <div class="relative w-24 h-24 mx-auto mb-6">
+                <div class="absolute inset-0 coffee-bean animate-bean-float"></div>
+                <div class="absolute inset-4 coffee-bean animate-bean-float" style="animation-delay: -2s;"></div>
+                <div class="absolute inset-8 coffee-bean animate-bean-float" style="animation-delay: -4s;"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <i class="fas fa-seedling text-3xl text-coffee-medium dark:text-coffee-light animate-pulse"></i>
+                </div>
+            </div>
+            <div class="text-lg font-semibold text-coffee-medium dark:text-coffee-light mb-2">Lugari Coffee Platform</div>
+            <div class="text-sm text-coffee-medium/70 dark:text-coffee-light/70 font-medium">Loading your farming dashboard...</div>
+            <div class="mt-4 loading-dots">
+                <span class="bg-coffee-medium dark:bg-coffee-light"></span>
+                <span class="bg-coffee-medium dark:bg-coffee-light"></span>
+                <span class="bg-coffee-medium dark:bg-coffee-light"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Container -->
+    <div class="flex min-h-screen relative">
+        <!-- Mobile Sidebar Overlay -->
+        <div id="sidebarOverlay" class="fixed inset-0 z-40 bg-black/50 lg:hidden hidden"></div>
+
+        <!-- Sidebar -->
+        <aside id="sidebar"
+            class="fixed lg:sticky top-0 left-0 h-screen w-64 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-r border-slate-200/50 dark:border-slate-800/50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col">
+            <!-- Sidebar Header -->
+            <div class="p-5 border-b border-slate-200/50 dark:border-slate-800/50">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="relative">
+                            <div class="w-9 h-9 bg-gradient-to-br from-coffee-medium to-coffee-leaf rounded-xl flex items-center justify-center shadow-lg">
+                                <i class="fas fa-seedling text-white text-sm"></i>
+                            </div>
+                            <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-coffee-leaf rounded-full border-2 border-white dark:border-slate-900"></div>
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold bg-gradient-to-r from-coffee-medium to-coffee-leaf bg-clip-text text-transparent">Lugari Coffee Platform</div>
+                            <div class="text-2xs text-slate-500 dark:text-slate-400">AI-Powered Farmer Dashboard</div>
+                        </div>
+                    </div>
+                    <button id="closeSidebar"
+                        class="lg:hidden p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                        <i class="fas fa-times text-sm text-slate-500 dark:text-slate-400"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Farmer Profile -->
+            <div class="p-5 border-b border-slate-200/50 dark:border-slate-800/50">
+                <div class="flex items-center space-x-3">
+                    <div class="relative">
+                        <div class="w-10 h-10 bg-gradient-to-br from-coffee-medium to-coffee-leaf rounded-full flex items-center justify-center text-white text-sm font-semibold shadow-lg">
+                            FO
+                        </div>
+                        <div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-coffee-leaf rounded-full border border-white dark:border-slate-900"></div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="text-sm font-semibold text-slate-900 dark:text-white truncate">Flevian Ochoka</div>
+                        <div class="text-2xs text-slate-500 dark:text-slate-400 flex items-center space-x-1">
+                            <span>Member ID: LCF-0247</span>
+                            <span class="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
+                            <span class="text-coffee-leaf dark:text-coffee-leaf">Active</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 grid grid-cols-2 gap-2 text-2xs">
+                    <div class="bg-slate-100 dark:bg-slate-800/50 rounded-lg p-2">
+                        <div class="font-semibold text-coffee-medium dark:text-coffee-light">2.4 Ha</div>
+                        <div class="text-slate-500 dark:text-slate-400">Farm Size</div>
+                    </div>
+                    <div class="bg-slate-100 dark:bg-slate-800/50 rounded-lg p-2">
+                        <div class="font-semibold text-coffee-medium dark:text-coffee-light">SL-28</div>
+                        <div class="text-slate-500 dark:text-slate-400">Variety</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 overflow-y-auto p-4 space-y-0.5 hide-scrollbar">
+                <!-- Dashboard Section -->
+                <div class="mb-6">
+                    <div class="px-3 mb-2">
+                        <div class="text-2xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Dashboard</div>
+                    </div>
+                    <div class="space-y-0.5">
+                        <a href="#overview"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl bg-coffee-light/50 dark:bg-coffee-medium/20 text-coffee-medium dark:text-coffee-light transition-colors group">
+                            <i class="fas fa-chart-line text-sm w-5"></i>
+                            <span class="text-sm font-medium">Overview</span>
+                            <span class="ml-auto">
+                                <i class="fas fa-chevron-right text-xs text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                            </span>
+                        </a>
+                        <a href="#farm-map"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-map-marked-alt text-sm w-5"></i>
+                            <span class="text-sm font-medium">Farm Mapping</span>
+                            <span class="ml-auto relative">
+                                <span class="notification-badge">1</span>
+                            </span>
+                        </a>
+                        <a href="#supply-chain"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-truck-loading text-sm w-5"></i>
+                            <span class="text-sm font-medium">Supply Chain</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Farming Section -->
+                <div class="mb-6">
+                    <div class="px-3 mb-2">
+                        <div class="text-2xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Farming</div>
+                    </div>
+                    <div class="space-y-0.5">
+                        <a href="#my-farms"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-tractor text-sm w-5"></i>
+                            <span class="text-sm font-medium">My Farms</span>
+                            <span class="ml-auto relative">
+                                <span class="notification-badge">2</span>
+                            </span>
+                        </a>
+                        <a href="#weather"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-cloud-sun text-sm w-5"></i>
+                            <span class="text-sm font-medium">Weather</span>
+                        </a>
+                        <a href="#farm-advisor"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-robot text-sm w-5"></i>
+                            <span class="text-sm font-medium">Sovret AI Advisor</span>
+                        </a>
+                        <a href="#market-prices"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-chart-bar text-sm w-5"></i>
+                            <span class="text-sm font-medium">Market Prices</span>
+                            <span class="ml-auto relative">
+                                <span class="notification-badge">!</span>
+                            </span>
+                        </a>
+                        <a href="#seedlings-inputs"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-seedling text-sm w-5"></i>
+                            <span class="text-sm font-medium">Seedlings & Inputs</span>
+                            <span class="ml-auto relative">
+                                <span class="notification-badge">3</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Finance Section -->
+                <div class="mb-6">
+                    <div class="px-3 mb-2">
+                        <div class="text-2xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Finance</div>
+                    </div>
+                    <div class="space-y-0.5">
+                        <a href="#payments"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-money-bill-wave text-sm w-5"></i>
+                            <span class="text-sm font-medium">Payments</span>
+                        </a>
+                        <a href="#loans"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-hand-holding-usd text-sm w-5"></i>
+                            <span class="text-sm font-medium">Loans</span>
+                        </a>
+                        <a href="#insurance"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-shield-alt text-sm w-5"></i>
+                            <span class="text-sm font-medium">Insurance</span>
+                        </a>
+                        <a href="#subsidies"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-award text-sm w-5"></i>
+                            <span class="text-sm font-medium">Subsidies</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Training Section -->
+                <div class="mb-6">
+                    <div class="px-3 mb-2">
+                        <div class="text-2xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Training</div>
+                    </div>
+                    <div class="space-y-0.5">
+                        <a href="#courses"
+                            class="flex items center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-graduation-cap text-sm w-5"></i>
+                            <span class="text-sm font-medium">Farming Courses</span>
+                        </a>
+                        <a href="#webinars"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-video text-sm w-5"></i>
+                            <span class="text-sm font-medium">Webinars</span>
+                            <span class="ml-auto relative">
+                                <span class="notification-badge">3</span>
+                            </span>
+                        </a>
+                        <a href="#resources"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-book text-sm w-5"></i>
+                            <span class="text-sm font-medium">Resources</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Community Section -->
+                <div class="mb-6">
+                    <div class="px-3 mb-2">
+                        <div class="text-2xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Community</div>
+                    </div>
+                    <div class="space-y-0.5">
+                        <a href="#forum"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-users text-sm w-5"></i>
+                            <span class="text-sm font-medium">Farmers Forum</span>
+                            <span class="ml-auto relative">
+                                <span class="notification-badge">12</span>
+                            </span>
+                        </a>
+                        <a href="#groups"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-user-friends text-sm w-5"></i>
+                            <span class="text-sm font-medium">Groups</span>
+                        </a>
+                        <a href="#events"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-calendar-alt text-sm w-5"></i>
+                            <span class="text-sm font-medium">Events</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Integration Section -->
+                <div class="mb-6">
+                    <div class="px-3 mb-2">
+                        <div class="text-2xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Integration</div>
+                    </div>
+                    <div class="space-y-0.5">
+                        <a href="ussd/index.php" target="_blank"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-mobile-alt text-sm w-5"></i>
+                            <span class="text-sm font-medium">USSD Services</span>
+                        </a>
+                        <a href="#whatsapp"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fab fa-whatsapp text-sm w-5"></i>
+                            <span class="text-sm font-medium">WhatsApp Bot</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Account Section -->
+                <div class="mb-6">
+                    <div class="px-3 mb-2">
+                        <div class="text-2xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Account</div>
+                    </div>
+                    <div class="space-y-0.5">
+                        <a href="#profile"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-user text-sm w-5"></i>
+                            <span class="text-sm font-medium">Profile</span>
+                        </a>
+                        <a href="#settings"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-cog text-sm w-5"></i>
+                            <span class="text-sm font-medium">Settings</span>
+                        </a>
+                        <a href="#notifications"
+                            class="flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 transition-colors group">
+                            <i class="fas fa-bell text-sm w-5"></i>
+                            <span class="text-sm font-medium">Notifications</span>
+                            <span class="ml-auto relative">
+                                <span class="notification-badge">5</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Stats Widget -->
+                <div class="mt-auto mx-3 p-4 bg-gradient-to-br from-coffee-medium to-coffee-leaf rounded-2xl text-white">
+                    <div class="text-center">
+                        <div class="flex items-center justify-center space-x-2 mb-2">
+                            <div class="relative w-12 h-12">
+                                <svg class="progress-ring w-12 h-12" viewBox="0 0 100 100">
+                                    <circle class="text-white/20" stroke="currentColor" stroke-width="8" fill="transparent" r="45" cx="50" cy="50" />
+                                    <circle class="progress-ring-circle text-white" stroke="currentColor" stroke-width="8" fill="transparent" r="45" cx="50" cy="50" style="stroke-dashoffset: 283px; stroke-dasharray: 283px;" data-progress="68" />
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-sm font-bold">68%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-2xs text-white/80 font-medium">Harvest Readiness</div>
+                        <div class="text-3xs text-white/60 mt-1">2 weeks to harvest</div>
+                        <a href="#harvest-schedule"
+                            class="inline-block mt-3 text-xs text-white hover:text-white/80 transition-colors">
+                            View Schedule <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="p-4 border-t border-slate-200/50 dark:border-slate-800/50">
+                <button class="w-full flex items-center justify-center space-x-2 px-3 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-slate-700 dark:text-slate-300 text-sm font-medium transition-colors group">
+                    <i class="fas fa-sign-out-alt text-sm"></i>
+                    <span><a href="index.php">Sign Out</a></span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col min-h-screen lg:ml-64 m-0 p-0">
+            <!-- Header -->
+            <header class="sticky top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-b border-slate-200/50 dark:border-slate-800/50">
+                <div class="flex items-center justify-between px-6 py-3">
+                    <!-- Left Section -->
+                    <div class="flex items-center space-x-4">
+                        <button id="toggleSidebar"
+                            class="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                            <i class="fas fa-bars text-slate-600 dark:text-slate-400"></i>
+                        </button>
+                        <div>
+                            <h1 class="text-lg font-semibold text-slate-900 dark:text-white">Karibu, Flevian! <span class="text-coffee-medium">☕</span></h1>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Track your farm, monitor prices, and grow better coffee</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Section -->
+                    <div class="flex items-center space-x-3">
+                        <!-- Dark Mode Toggle -->
+                        <button id="themeToggle"
+                            class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                            <i class="fas fa-moon text-slate-600 dark:text-slate-400"></i>
+                        </button>
+
+                        <!-- Notifications -->
+                        <div class="relative">
+                            <button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors relative">
+                                <i class="fas fa-bell text-slate-600 dark:text-slate-400"></i>
+                                <span class="notification-badge">5</span>
+                            </button>
+
+                            <!-- Notification Dropdown -->
+                            <div id="notificationDropdown"
+                                class="absolute right-0 mt-2 w-80 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 hidden z-50 animate-slide-up overflow-hidden">
+                                <div class="p-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                                    <h3 class="text-sm font-semibold text-slate-900 dark:text-white">Farm Alerts</h3>
+                                    <button class="text-xs text-coffee-medium dark:text-coffee-light font-medium hover:underline">Mark all as read</button>
+                                </div>
+                                <div class="max-h-64 overflow-y-auto hide-scrollbar">
+                                    <a href="#"
+                                        class="flex items-start space-x-3 p-3 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors border-b border-slate-200/50 dark:border-slate-700/50 last:border-0">
+                                        <div class="relative flex-shrink-0">
+                                            <div class="w-8 h-8 bg-coffee-light/20 dark:bg-coffee-medium/20 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-cloud-rain text-coffee-medium text-xs"></i>
+                                            </div>
+                                            <span class="absolute -top-0.5 -right-0.5 w-2 h-2 bg-coffee-leaf rounded-full border border-white dark:border-slate-800"></span>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-xs text-slate-900 dark:text-white truncate">Rain forecast: Expect 20mm rainfall tomorrow</p>
+                                            <p class="text-3xs text-slate-500 dark:text-slate-400 mt-0.5">2 hours ago • Advisory</p>
+                                        </div>
+                                    </a>
+                                    <a href="#"
+                                        class="flex items-start space-x-3 p-3 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors border-b border-slate-200/50 dark:border-slate-700/50 last:border-0">
+                                        <div class="relative flex-shrink-0">
+                                            <div class="w-8 h-8 bg-coffee-leaf/20 dark:bg-coffee-leaf/20 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-shopping-cart text-coffee-leaf text-xs"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-xs text-slate-900 dark:text-white truncate">Nairobi Exchange: Coffee price up 8% this week</p>
+                                            <p class="text-3xs text-slate-500 dark:text-slate-400 mt-0.5">4 hours ago • Market Update</p>
+                                        </div>
+                                    </a>
+                                    <a href="#"
+                                        class="flex items-start space-x-3 p-3 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors border-b border-slate-200/50 dark:border-slate-700/50 last:border-0">
+                                        <div class="relative flex-shrink-0">
+                                            <div class="w-8 h-8 bg-amber-50 dark:bg-amber-900/20 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-exclamation-triangle text-amber-500 text-xs"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-xs text-slate-900 dark:text-white truncate">Coffee Berry Borer alert in your region</p>
+                                            <p class="text-3xs text-slate-500 dark:text-slate-400 mt-0.5">1 day ago • Pest Alert</p>
+                                        </div>
+                                    </a>
+                                    <a href="#"
+                                        class="flex items-start space-x-3 p-3 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors border-b border-slate-200/50 dark:border-slate-700/50 last:border-0">
+                                        <div class="relative flex-shrink-0">
+                                            <div class="w-8 h-8 bg-primary-50 dark:bg-primary-900/20 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-calendar text-primary-500 text-xs"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-xs text-slate-900 dark:text-white truncate">Harvest planning workshop this Saturday</p>
+                                            <p class="text-3xs text-slate-500 dark:text-slate-400 mt-0.5">3 days ago • Event</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="p-3 border-t border-slate-200 dark:border-slate-700 text-center">
+                                    <a href="#" class="text-xs text-coffee-medium dark:text-coffee-light font-medium hover:underline">View all notifications</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Profile Dropdown -->
+                        <div class="relative">
+                            <button id="profileToggle"
+                                class="flex items-center space-x-3 p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors">
+                                <div class="w-8 h-8 bg-gradient-to-br from-coffee-medium to-coffee-leaf rounded-full flex items-center justify-center text-white text-xs font-semibold">
+                                    FO
+                                </div>
+                                <div class="text-left hidden lg:block">
+                                    <div class="text-sm font-medium text-slate-900 dark:text-white">Flevian Ochoka</div>
+                                    <div class="text-2xs text-slate-500 dark:text-slate-400">Farmer ID: LCF-0247</div>
+                                </div>
+                                <i class="fas fa-chevron-down text-xs text-slate-400 hidden lg:block"></i>
+                            </button>
+
+                            <!-- Dropdown Menu -->
+                            <div id="profileDropdown"
+                                class="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 hidden z-50 animate-slide-up">
+                                <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-gradient-to-br from-coffee-medium to-coffee-leaf rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                                            FO
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-semibold text-slate-900 dark:text-white">Flevian Ochoka</div>
+                                            <div class="text-2xs text-slate-500 dark:text-slate-400">Lugari Coffee Farmer</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-2">
+                                    <a href="#profile"
+                                        class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors text-sm">
+                                        <i class="fas fa-user text-sm w-5"></i>
+                                        <span>My Profile</span>
+                                    </a>
+                                    <a href="#settings"
+                                        class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors text-sm">
+                                        <i class="fas fa-cog text-sm w-5"></i>
+                                        <span>Settings</span>
+                                    </a>
+                                    <a href="#help"
+                                        class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors text-sm">
+                                        <i class="fas fa-question-circle text-sm w-5"></i>
+                                        <span>Help Center</span>
+                                    </a>
+                                    <div class="border-t border-slate-200 dark:border-slate-700 my-2"></div>
+                                    <a href="index.php"
+                                        class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors text-sm">
+                                        <i class="fas fa-sign-out-alt text-sm w-5"></i>
+                                        <span>Sign Out</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 p-4 md:p-6">
+                <!-- Quick Stats Bar -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                    <div class="bg-white dark:bg-slate-800 rounded-xl p-4 farmer-card card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="text-2xs text-slate-500 dark:text-slate-400">Total Farm Area</div>
+                                <div class="text-lg font-bold text-coffee-medium dark:text-coffee-light">2.4 Ha</div>
+                            </div>
+                            <div class="w-10 h-10 bg-coffee-light/20 dark:bg-coffee-medium/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-map text-coffee-medium dark:text-coffee-light"></i>
+                            </div>
+                        </div>
+                        <div class="text-3xs text-slate-500 dark:text-slate-400 mt-2">3 plots • 1,200 trees</div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 rounded-xl p-4 farmer-card card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="text-2xs text-slate-500 dark:text-slate-400">This Season Yield</div>
+                                <div class="text-lg font-bold text-coffee-medium dark:text-coffee-light">850 kg</div>
+                            </div>
+                            <div class="w-10 h-10 bg-coffee-light/20 dark:bg-coffee-medium/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-weight text-coffee-medium dark:text-coffee-light"></i>
+                            </div>
+                        </div>
+                        <div class="text-3xs text-slate-500 dark:text-slate-400 mt-2">Est. value: KSh 425,000</div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 rounded-xl p-4 farmer-card card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="text-2xs text-slate-500 dark:text-slate-400">Current Price</div>
+                                <div class="text-lg font-bold text-coffee-medium dark:text-coffee-light">KSh 500/kg</div>
+                            </div>
+                            <div class="w-10 h-10 bg-coffee-light/20 dark:bg-coffee-medium/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-chart-line text-coffee-medium dark:text-coffee-light"></i>
+                            </div>
+                        </div>
+                        <div class="text-3xs text-coffee-leaf mt-2">↑ 8% this week</div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 rounded-xl p-4 farmer-card card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="text-2xs text-slate-500 dark:text-slate-400">Next Harvest</div>
+                                <div class="text-lg font-bold text-coffee-medium dark:text-coffee-light">14 days</div>
+                            </div>
+                            <div class="w-10 h-10 bg-coffee-light/20 dark:bg-coffee-medium/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-calendar-alt text-coffee-medium dark:text-coffee-light"></i>
+                            </div>
+                        </div>
+                        <div class="text-3xs text-slate-500 dark:text-slate-400 mt-2">Start prep in 7 days</div>
+                    </div>
+                </div>
+
+                <!-- Main Dashboard Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Farm Mapping & QR Section -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 card-hover border border-slate-200 dark:border-slate-700 mb-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-coffee-medium to-coffee-leaf rounded-xl flex items-center justify-center">
+                                        <i class="fas fa-qrcode text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Farm Mapping & Traceability</h2>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400">Scan QR codes to track coffee from farm to cup</p>
+                                    </div>
+                                </div>
+                                <button class="px-4 py-2 bg-coffee-medium hover:bg-coffee-dark text-white rounded-lg text-sm font-semibold transition-colors">
+                                    <i class="fas fa-plus mr-2"></i>Add Farm
+                                </button>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- QR Code Section -->
+                                <div>
+                                    <h3 class="text-sm font-semibold text-slate-900 dark:text-white mb-3">Farm QR Codes</h3>
+                                    <div class="space-y-4">
+                                        <div class="p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                                            <div class="flex items-center space-x-3 mb-3">
+                                                <div id="farmQR" class="qr-code-container"></div>
+                                                <div>
+                                                    <h4 class="text-sm font-semibold text-slate-900 dark:text-white">Main Farm Plot</h4>
+                                                    <p class="text-2xs text-slate-500 dark:text-slate-400">ID: LCF-0247-01</p>
+                                                    <p class="text-2xs text-slate-500 dark:text-slate-400">1.2 Ha • 600 trees</p>
+                                                </div>
+                                            </div>
+                                            <button onclick="downloadQR()" class="w-full py-2 border border-coffee-medium text-coffee-medium dark:text-coffee-light hover:bg-coffee-light/10 rounded-lg text-sm font-medium transition-colors">
+                                                <i class="fas fa-download mr-2"></i>Download QR
+                                            </button>
+                                        </div>
+
+                                        <div class="p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                                            <div class="flex items-center justify-between mb-3">
+                                                <h4 class="text-sm font-semibold text-slate-900 dark:text-white">Scan QR Code</h4>
+                                                <span class="text-2xs text-coffee-medium font-medium">Offline Scan Available</span>
+                                            </div>
+
+                                            <!-- Camera Input -->
+                                            <div class="relative mb-3">
+                                                <input type="text" id="qrInput"
+                                                    placeholder="Enter QR code or scan with camera"
+                                                    class="w-full pl-4 pr-12 py-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-coffee-medium">
+
+                                                <!-- Camera Button - Centered properly -->
+                                                <div class="absolute right-0 top-0 bottom-0 flex items-center justify-center pr-3">
+                                                    <button id="cameraButton" class="w-10 h-10 bg-gradient-to-br from-coffee-medium to-coffee-leaf text-white rounded-lg flex items-center justify-center hover:opacity-90 transition-opacity">
+                                                        <i class="fas fa-camera text-sm"></i>
+                                                        <input type="file" id="cameraInput" accept="image/*" capture="environment" class="hidden">
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Video Preview -->
+                                            <div id="cameraPreview" class="hidden mb-3">
+                                                <div class="relative">
+                                                    <video id="qrScanner" class="w-full h-48 object-cover rounded-lg"></video>
+                                                    <div class="absolute inset-0 flex items-center justify-center">
+                                                        <div class="w-48 h-48 border-2 border-coffee-medium border-dashed rounded-lg opacity-50"></div>
+                                                    </div>
+                                                    <button id="stopCamera" class="absolute top-2 right-2 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                                <p class="text-2xs text-slate-500 mt-2 text-center">Point camera at QR code. Scanning will start automatically.</p>
+                                            </div>
+
+                                            <!-- Scan Result -->
+                                            <div id="scanResult" class="hidden p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <span class="text-sm font-medium text-slate-900 dark:text-white">Scan Result:</span>
+                                                    <button id="clearResult" class="text-2xs text-coffee-medium hover:underline">Clear</button>
+                                                </div>
+                                                <div id="resultContent" class="text-sm text-slate-700 dark:text-slate-300"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Map Section -->
+                                <div>
+                                    <h3 class="text-sm font-semibold text-slate-900 dark:text-white mb-3">Farm Location</h3>
+                                    <div id="farmMap" class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700"></div>
+                                    <div class="mt-3 grid grid-cols-2 gap-3 text-sm">
+                                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                                            <div class="text-2xs text-slate-500 dark:text-slate-400">Coordinates</div>
+                                            <div class="font-mono text-sm">0.68°N, 34.92°E</div>
+                                        </div>
+                                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                                            <div class="text-2xs text-slate-500 dark:text-slate-400">Elevation</div>
+                                            <div class="font-mono text-sm">1,850 MASL</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Supply Chain Tracker -->
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 card-hover border border-slate-200 dark:border-slate-700">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-coffee-medium to-coffee-leaf rounded-xl flex items-center justify-center">
+                                        <i class="fas fa-truck-loading text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Supply Chain Tracker</h2>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400">Track your coffee from farm to market in real-time</p>
+                                    </div>
+                                </div>
+                                <button class="px-4 py-2 border border-coffee-medium text-coffee-medium dark:text-coffee-light hover:bg-coffee-light/10 rounded-lg text-sm font-semibold transition-colors">
+                                    <i class="fas fa-history mr-2"></i>Track History
+                                </button>
+                            </div>
+
+                            <div class="relative">
+                                <!-- Supply Chain Progress -->
+                                <div class="flex justify-between mb-8 relative">
+                                    <div class="text-center">
+                                        <div class="w-12 h-12 bg-coffee-leaf text-white rounded-full flex items-center justify-center mx-auto mb-2">
+                                            <i class="fas fa-seedling"></i>
+                                        </div>
+                                        <div class="text-xs font-semibold">Harvested</div>
+                                        <div class="text-2xs text-slate-500">Dec 15, 2024</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="w-12 h-12 bg-coffee-medium text-white rounded-full flex items-center justify-center mx-auto mb-2">
+                                            <i class="fas fa-water"></i>
+                                        </div>
+                                        <div class="text-xs font-semibold">Washed</div>
+                                        <div class="text-2xs text-slate-500">Dec 18, 2024</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="w-12 h-12 bg-amber-500 text-white rounded-full flex items-center justify-center mx-auto mb-2">
+                                            <i class="fas fa-sun"></i>
+                                        </div>
+                                        <div class="text-xs font-semibold">Drying</div>
+                                        <div class="text-2xs text-slate-500">Current</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="w-12 h-12 bg-slate-300 dark:bg-slate-600 text-slate-700 dark:text-slate-300 rounded-full flex items-center justify-center mx-auto mb-2">
+                                            <i class="fas fa-warehouse"></i>
+                                        </div>
+                                        <div class="text-xs font-semibold">Milling</div>
+                                        <div class="text-2xs text-slate-500">Pending</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="w-12 h-12 bg-slate-300 dark:bg-slate-600 text-slate-700 dark:text-slate-300 rounded-full flex items-center justify-center mx-auto mb-2">
+                                            <i class="fas fa-store"></i>
+                                        </div>
+                                        <div class="text-xs font-semibold">Market</div>
+                                        <div class="text-2xs text-slate-500">Pending</div>
+                                    </div>
+                                </div>
+
+                                <!-- Progress Bar -->
+                                <div class="relative h-2 bg-slate-200 dark:bg-slate-700 rounded-full mb-8">
+                                    <div class="absolute h-full bg-gradient-to-r from-coffee-leaf via-coffee-medium to-amber-500 rounded-full" style="width: 60%"></div>
+                                </div>
+
+                                <!-- Current Batch Details -->
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+                                        <div class="text-2xs text-slate-500 dark:text-slate-400 mb-1">Batch ID</div>
+                                        <div class="text-sm font-semibold text-slate-900 dark:text-white">LCF-0247-B12</div>
+                                    </div>
+                                    <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+                                        <div class="text-2xs text-slate-500 dark:text-slate-400 mb-1">Current Status</div>
+                                        <div class="flex items-center">
+                                            <span class="text-sm font-semibold text-amber-600 dark:text-amber-400">Sun Drying</span>
+                                            <div class="ml-2 w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+                                        <div class="text-2xs text-slate-500 dark:text-slate-400 mb-1">Estimated Completion</div>
+                                        <div class="text-sm font-semibold text-slate-900 dark:text-white">Jan 5, 2025</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Seedlings & Farm Inputs Acquisition Section -->
+<div class="bg-white dark:bg-slate-800 rounded-2xl p-4 card-hover border border-slate-200 dark:border-slate-700 mb-6">
+    <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
+                <i class="fas fa-seedling text-white"></i>
+            </div>
+            <div>
+                <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Seedlings & Farm Inputs</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Order coffee seedlings, fertilizers, and inputs from verified dealers</p>
+            </div>
+        </div>
+        <button class="px-4 py-2 bg-coffee-medium hover:bg-coffee-dark text-white rounded-lg text-sm font-semibold transition-colors">
+            <i class="fas fa-shopping-cart mr-2"></i>Order History
+        </button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Available Dealers -->
+        <div>
+            <h3 class="text-sm font-semibold text-slate-900 dark:text-white mb-3">Verified Dealers</h3>
+            <div class="space-y-4">
+                <div class="p-4 border border-slate-200 dark:border-slate-700 rounded-xl hover:border-coffee-medium transition-colors">
+                    <div class="flex items-start justify-between mb-3">
+                        <div>
+                            <h4 class="text-sm font-semibold text-slate-900 dark:text-white">Lugari Coffee Nurseries</h4>
+                            <p class="text-2xs text-slate-500 dark:text-slate-400">Certified SL-28 & Ruiru 11 seedlings</p>
+                        </div>
+                        <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-2xs font-semibold rounded-full">Verified</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 mb-3">
+                        <div class="p-2 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                            <div class="text-2xs text-slate-500">Available</div>
+                            <div class="text-sm font-bold text-coffee-medium dark:text-coffee-light">5,000</div>
+                        </div>
+                        <div class="p-2 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                            <div class="text-2xs text-slate-500">Price per 100</div>
+                            <div class="text-sm font-bold text-coffee-medium dark:text-coffee-light">KSh 2,500</div>
+                        </div>
+                    </div>
+                    <button onclick="orderSeedlings('Lugari Coffee Nurseries')" class="w-full py-2 bg-coffee-medium hover:bg-coffee-dark text-white rounded-lg text-sm font-medium transition-colors">
+                        <i class="fas fa-cart-plus mr-2"></i>Order Now
+                    </button>
+                </div>
+
+                <div class="p-4 border border-slate-200 dark:border-slate-700 rounded-xl hover:border-coffee-medium transition-colors">
+                    <div class="flex items-start justify-between mb-3">
+                        <div>
+                            <h4 class="text-sm font-semibold text-slate-900 dark:text-white">AgroSolutions Ltd</h4>
+                            <p class="text-2xs text-slate-500 dark:text-slate-400">Fertilizers & Pest Control</p>
+                        </div>
+                        <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-2xs font-semibold rounded-full">Cooperative Partner</span>
+                    </div>
+                    <div class="space-y-2 mb-3">
+                        <div class="flex justify-between text-sm">
+                            <span>NPK 17:17:17 (50kg)</span>
+                            <span class="font-semibold">KSh 3,200</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span>Copper Fungicide (1L)</span>
+                            <span class="font-semibold">KSh 1,500</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span>Organic Manure (ton)</span>
+                            <span class="font-semibold">KSh 8,000</span>
+                        </div>
+                    </div>
+                    <button onclick="orderInputs('AgroSolutions Ltd')" class="w-full py-2 border border-coffee-medium text-coffee-medium dark:text-coffee-light hover:bg-coffee-light/10 rounded-lg text-sm font-medium transition-colors">
+                        <i class="fas fa-list-alt mr-2"></i>View Products
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Form -->
+        <div>
+            <h3 class="text-sm font-semibold text-slate-900 dark:text-white mb-3">Place Order</h3>
+            <div class="p-4 border border-slate-200 dark:border-slate-700 rounded-xl">
+                <form id="seedlingOrderForm">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 block">Select Dealer</label>
+                            <select class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-coffee-medium">
+                                <option>Lugari Coffee Nurseries</option>
+                                <option>AgroSolutions Ltd</option>
+                                <option>Kenya Seed Company</option>
+                                <option>Farm Inputs Co-op</option>
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 block">Item Type</label>
+                                <select class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-coffee-medium">
+                                    <option>SL-28 Seedlings</option>
+                                    <option>Ruiru 11 Seedlings</option>
+                                    <option>NPK Fertilizer</option>
+                                    <option>Organic Manure</option>
+                                    <option>Fungicide</option>
+                                    <option>Pesticide</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 block">Quantity</label>
+                                <input type="number" min="1" value="100"
+                                    class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-coffee-medium">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 block">Delivery Address</label>
+                            <textarea rows="2"
+                                class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-coffee-medium"
+                                placeholder="Enter your farm location or delivery address">Main Farm Plot, Lugari</textarea>
+                        </div>
+
+                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Subtotal</span>
+                                <span class="font-semibold">KSh 2,500</span>
+                            </div>
+                            <div class="flex justify-between text-sm mb-2">
+                                <span>Delivery Fee</span>
+                                <span class="font-semibold">KSh 500</span>
+                            </div>
+                            <div class="flex justify-between text-base font-bold text-coffee-medium dark:text-coffee-light">
+                                <span>Total</span>
+                                <span>KSh 3,000</span>
+                            </div>
+                        </div>
+
+                        <div class="flex space-x-3">
+                            <button type="button" onclick="submitOrder()" class="flex-1 py-3 bg-coffee-medium hover:bg-coffee-dark text-white rounded-xl text-sm font-semibold transition-colors">
+                                <i class="fas fa-check-circle mr-2"></i>Place Order
+                            </button>
+                            <button type="button" onclick="consultSovret('inputs')" class="flex-1 py-3 border border-coffee-medium text-coffee-medium dark:text-coffee-light hover:bg-coffee-light/10 rounded-xl text-sm font-semibold transition-colors">
+                                <i class="fas fa-robot mr-2"></i>Ask Sovret
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Subsidy Information -->
+            <div class="mt-4 p-4 bg-gradient-to-r from-coffee-medium/10 to-coffee-leaf/10 dark:from-coffee-medium/20 dark:to-coffee-leaf/20 rounded-xl">
+                <div class="flex items-center space-x-3 mb-2">
+                    <i class="fas fa-award text-coffee-medium"></i>
+                    <span class="text-sm font-semibold text-slate-900 dark:text-white">Subsidy Available</span>
+                </div>
+                <p class="text-sm text-slate-700 dark:text-slate-300 mb-3">
+                    Cooperative members get 30% subsidy on seedlings. Apply via USSD *384*765# or visit cooperative office.
+                </p>
+                <button onclick="applySubsidy()" class="w-full py-2 border border-coffee-medium text-coffee-medium dark:text-coffee-light hover:bg-coffee-light/10 rounded-lg text-sm font-medium transition-colors">
+                    <i class="fas fa-file-alt mr-2"></i>Apply for Subsidy
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="space-y-6">
+                        <!-- Weather & Farm Advisor -->
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 card-hover border border-slate-200 dark:border-slate-700">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
+                                        <i class="fas fa-cloud-sun text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Weather & Advisory</h2>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400">Lugari, Kakamega County</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-2xl font-bold text-slate-900 dark:text-white">24°C</div>
+                                    <div class="text-2xs text-slate-500 dark:text-slate-400">Partly Cloudy</div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <!-- 7-Day Forecast -->
+                                <div class="flex justify-between overflow-x-auto pb-2">
+                                    <div class="text-center px-2">
+                                        <div class="text-2xs text-slate-500 dark:text-slate-400">Today</div>
+                                        <i class="fas fa-cloud-rain text-blue-500 text-lg my-2"></i>
+                                        <div class="text-sm font-semibold">24°</div>
+                                        <div class="text-3xs text-slate-500">20mm</div>
+                                    </div>
+                                    <div class="text-center px-2">
+                                        <div class="text-2xs text-slate-500 dark:text-slate-400">Tue</div>
+                                        <i class="fas fa-cloud text-blue-400 text-lg my-2"></i>
+                                        <div class="text-sm font-semibold">25°</div>
+                                        <div class="text-3xs text-slate-500">5mm</div>
+                                    </div>
+                                    <div class="text-center px-2">
+                                        <div class="text-2xs text-slate-500 dark:text-slate-400">Wed</div>
+                                        <i class="fas fa-sun text-amber-500 text-lg my-2"></i>
+                                        <div class="text-sm font-semibold">27°</div>
+                                        <div class="text-3xs text-slate-500">-</div>
+                                    </div>
+                                    <div class="text-center px-2">
+                                        <div class="text-2xs text-slate-500 dark:text-slate-400">Thu</div>
+                                        <i class="fas fa-sun text-amber-500 text-lg my-2"></i>
+                                        <div class="text-sm font-semibold">28°</div>
+                                        <div class="text-3xs text-slate-500">-</div>
+                                    </div>
+                                    <div class="text-center px-2">
+                                        <div class="text-2xs text-slate-500 dark:text-slate-400">Fri</div>
+                                        <i class="fas fa-cloud text-blue-400 text-lg my-2"></i>
+                                        <div class="text-sm font-semibold">26°</div>
+                                        <div class="text-3xs text-slate-500">2mm</div>
+                                    </div>
+                                </div>
+
+                                <!-- Sovret AI Advisor -->
+                                <div class="p-4 bg-gradient-to-r from-coffee-medium/10 to-coffee-leaf/10 dark:from-coffee-medium/20 dark:to-coffee-leaf/20 rounded-xl">
+                                    <div class="flex items-center space-x-3 mb-3">
+                                        <div class="w-8 h-8 bg-coffee-medium rounded-full flex items-center justify-center">
+                                            <i class="fas fa-robot text-white text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-semibold text-slate-900 dark:text-white">Sovret AI Assistant</div>
+                                            <div class="text-2xs text-slate-500 dark:text-slate-400">Farm Advisory</div>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-slate-700 dark:text-slate-300 mb-3">
+                                        <i class="fas fa-lightbulb text-amber-500 mr-2"></i>
+                                        <strong>Rain Advisory:</strong> Expect 20mm rain tomorrow. Delay pesticide application and check drainage.
+                                    </p>
+                                    <button onclick="askSovret('rain advisory')" class="w-full py-2 bg-coffee-medium hover:bg-coffee-dark text-white rounded-lg text-sm font-medium transition-colors">
+                                        <i class="fas fa-comment mr-2"></i>Ask Sovret AI
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Market Prices -->
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 card-hover border border-slate-200 dark:border-slate-700">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
+                                        <i class="fas fa-chart-line text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Market Prices</h2>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400">Nairobi Coffee Exchange</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold text-coffee-leaf">KSh 500</div>
+                                    <div class="text-2xs text-coffee-leaf">↑ 8% this week</div>
+                                </div>
+                            </div>
+
+                            <canvas id="priceChart" class="w-full h-40 mb-4"></canvas>
+
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                                    <div>
+                                        <div class="text-sm font-medium text-slate-900 dark:text-white">Arabica AA</div>
+                                        <div class="text-2xs text-slate-500 dark:text-slate-400">Grade 1</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-sm font-bold text-coffee-medium dark:text-coffee-light">KSh 520</div>
+                                        <div class="text-2xs text-coffee-leaf">↑ 12.5%</div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                                    <div>
+                                        <div class="text-sm font-medium text-slate-900 dark:text-white">Arabica AB</div>
+                                        <div class="text-2xs text-slate-500 dark:text-slate-400">Grade 2</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-sm font-bold text-coffee-medium dark:text-coffee-light">KSh 480</div>
+                                        <div class="text-2xs text-coffee-leaf">↑ 8.3%</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="w-full mt-4 py-3 border border-coffee-medium text-coffee-medium dark:text-coffee-light hover:bg-coffee-light/10 rounded-xl text-sm font-semibold transition-colors flex items-center justify-center">
+                                <i class="fas fa-external-link-alt mr-2"></i>View Full Market Report
+                            </button>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <!-- <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 card-hover border border-slate-200 dark:border-slate-700">
+                            <h3 class="text-sm font-semibold text-slate-900 dark:text-white mb-4">Quick Actions</h3>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button class="p-3 bg-coffee-light/10 dark:bg-coffee-medium/10 hover:bg-coffee-light/20 dark:hover:bg-coffee-medium/20 rounded-xl transition-colors flex flex-col items-center justify-center">
+                                    <i class="fas fa-phone-alt text-coffee-medium dark:text-coffee-light text-lg mb-2"></i>
+                                    <span class="text-xs font-medium">USSD Menu</span>
+                                </button>
+                                <button class="p-3 bg-coffee-light/10 dark:bg-coffee-medium/10 hover:bg-coffee-light/20 dark:hover:bg-coffee-medium/20 rounded-xl transition-colors flex flex-col items-center justify-center">
+                                    <i class="fab fa-whatsapp text-coffee-medium dark:text-coffee-light text-lg mb-2"></i>
+                                    <span class="text-xs font-medium">WhatsApp Bot</span>
+                                </button>
+                                <button class="p-3 bg-coffee-light/10 dark:bg-coffee-medium/10 hover:bg-coffee-light/20 dark:hover:bg-coffee-medium/20 rounded-xl transition-colors flex flex-col items-center justify-center">
+                                    <i class="fas fa-file-invoice-dollar text-coffee-medium dark:text-coffee-light text-lg mb-2"></i>
+                                    <span class="text-xs font-medium">Payment</span>
+                                </button>
+                                <button class="p-3 bg-coffee-light/10 dark:bg-coffee-medium/10 hover:bg-coffee-light/20 dark:hover:bg-coffee-medium/20 rounded-xl transition-colors flex flex-col items-center justify-center">
+                                    <i class="fas fa-book text-coffee-medium dark:text-coffee-light text-lg mb-2"></i>
+                                    <span class="text-xs font-medium">Training</span>
+                                </button>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <!-- Additional Sections -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <!-- USSD Integration -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 card-hover border border-slate-200 dark:border-slate-700">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-mobile-alt text-white"></i>
+                                </div>
+                                <div>
+                                    <h2 class="text-lg font-semibold text-slate-900 dark:text-white">USSD Services</h2>
+                                    <p class="text-sm text-slate-500 dark:text-slate-400">Dial *384*765# for quick access</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm font-semibold text-coffee-medium dark:text-coffee-light">Active</div>
+                                <div class="text-2xs text-slate-500 dark:text-slate-400">M-Pesa: 0723***456</div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- USSD Menu Simulator -->
+                            <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="text-sm font-semibold text-slate-900 dark:text-white">USSD Menu Simulator</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                        <div class="text-2xs text-slate-500">Connected</div>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <div class="p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                                        <div class="text-2xs text-slate-500 mb-1">Enter your M-Pesa number:</div>
+                                        <div class="flex space-x-2">
+                                            <input type="tel" id="mpesaNumber" placeholder="0723 456 789"
+                                                class="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900 text-sm"
+                                                value="0723456789">
+                                            <button onclick="autofillMpesa()" class="px-4 py-2 bg-coffee-medium hover:bg-coffee-dark text-white rounded-lg text-sm font-medium transition-colors">
+                                                <i class="fas fa-bolt mr-1"></i>Auto-fill
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                   <div class="grid grid-cols-3 gap-2">
+
+    <a href="ussd" target="_blank"
+       class="p-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg text-sm text-center block">
+        1. Register
+    </a>
+
+    <a href="ussd" target="_blank"
+       class="p-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg text-sm text-center block">
+        2. Prices
+    </a>
+
+    <a href="ussd" target="_blank"
+       class="p-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg text-sm text-center block">
+        3. Payment
+    </a>
+
+    <a href="ussd" target="_blank"
+       class="p-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg text-sm text-center block">
+        4. Weather
+    </a>
+
+    <a href="ussd" target="_blank"
+       class="p-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg text-sm text-center block">
+        5. Advisory
+    </a>
+
+    <a href="ussd" target="_blank"
+       class="p-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg text-sm text-center block">
+        6. Help
+    </a>
+
+</div>
+
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="p-3 bg-gradient-to-r from-green-500/10 to-emerald-500/10 dark:from-green-500/20 dark:to-emerald-500/20 rounded-xl">
+                                    <div class="text-2xs text-slate-500 dark:text-slate-400 mb-1">Last Payment</div>
+                                    <div class="text-sm font-bold text-slate-900 dark:text-white">KSh 45,200</div>
+                                    <div class="text-3xs text-slate-500 dark:text-slate-400">Dec 10, 2024</div>
+                                </div>
+                                <div class="p-3 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20 rounded-xl">
+                                    <div class="text-2xs text-slate-500 dark:text-slate-400 mb-1">USSD Sessions</div>
+                                    <div class="text-sm font-bold text-slate-900 dark:text-white">24</div>
+                                    <div class="text-3xs text-slate-500 dark:text-slate-400">This month</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp Integration -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 card-hover border border-slate-200 dark:border-slate-700">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center">
+                                    <i class="fab fa-whatsapp text-white"></i>
+                                </div>
+                                <div>
+                                    <h2 class="text-lg font-semibold text-slate-900 dark:text-white">WhatsApp Registration Bot</h2>
+                                    <p class="text-sm text-slate-500 dark:text-slate-400">Chat with +254 700 123 456</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm font-semibold text-green-600 dark:text-green-400">Online</div>
+                                <div class="text-2xs text-slate-500 dark:text-slate-400">24/7 Support</div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- Chat Simulator -->
+                            <div class="h-48 overflow-y-auto hide-scrollbar p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700">
+                                <!-- Bot Message -->
+                                <div class="flex mb-4">
+                                    <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mr-2">
+                                        <i class="fab fa-whatsapp text-white text-xs"></i>
+                                    </div>
+                                    <div class="bg-white dark:bg-slate-700 rounded-2xl rounded-tl-none px-4 py-2 max-w-xs">
+                                        <p class="text-sm">Hello! I'm your Lugari Coffee Assistant. How can I help you today?</p>
+                                    </div>
+                                </div>
+
+                                <!-- User Message -->
+                                <div class="flex justify-end mb-4">
+                                    <div class="bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl rounded-tr-none px-4 py-2 max-w-xs">
+                                        <p class="text-sm">I want to register as a new farmer</p>
+                                    </div>
+                                    <div class="w-6 h-6 bg-coffee-medium rounded-full flex items-center justify-center flex-shrink-0 ml-2">
+                                        <span class="text-xs text-white font-semibold">FO</span>
+                                    </div>
+                                </div>
+
+                                <!-- Bot Response -->
+                                <div class="flex mb-4">
+                                    <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mr-2">
+                                        <i class="fab fa-whatsapp text-white text-xs"></i>
+                                    </div>
+                                    <div class="bg-white dark:bg-slate-700 rounded-2xl rounded-tl-none px-4 py-2 max-w-xs">
+                                        <p class="text-sm mb-2">Great! Let's get you registered. Please choose:</p>
+                                        <div class="space-y-1">
+                                            <button class="text-left text-sm text-green-600 hover:text-green-700">1. New Farmer Registration</button><br>
+                                            <button class="text-left text-sm text-green-600 hover:text-green-700">2. Existing Farmer Update</button><br>
+                                            <button class="text-left text-sm text-green-600 hover:text-green-700">3. Farm Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Templates -->
+                            <div>
+                                <div class="text-sm font-medium text-slate-900 dark:text-white mb-2">Quick Messages</div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button onclick="sendWhatsAppTemplate('register')" class="p-2 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-lg text-sm text-green-700 dark:text-green-300 transition-colors">
+                                        <i class="fab fa-whatsapp mr-1"></i>Register
+                                    </button>
+                                    <button onclick="sendWhatsAppTemplate('prices')" class="p-2 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-lg text-sm text-green-700 dark:text-green-300 transition-colors">
+                                        <i class="fab fa-whatsapp mr-1"></i>Check Prices
+                                    </button>
+                                    <button onclick="sendWhatsAppTemplate('weather')" class="p-2 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-lg text-sm text-green-700 dark:text-green-300 transition-colors">
+                                        <i class="fab fa-whatsapp mr-1"></i>Weather
+                                    </button>
+                                    <button onclick="sendWhatsAppTemplate('support')" class="p-2 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-lg text-sm text-green-700 dark:text-green-300 transition-colors">
+                                        <i class="fab fa-whatsapp mr-1"></i>Support
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training & Community Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <!-- Training Resources -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 card-hover border border-slate-200 dark:border-slate-700">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-graduation-cap text-white"></i>
+                                </div>
+                                <div>
+                                    <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Training Resources</h2>
+                                    <p class="text-sm text-slate-500 dark:text-slate-400">Learn better farming practices</p>
+                                </div>
+                            </div>
+                            <button class="px-4 py-2 border border-coffee-medium text-coffee-medium dark:text-coffee-light hover:bg-coffee-light/10 rounded-lg text-sm font-semibold transition-colors">
+                                View All
+                            </button>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <div class="flex items-center space-x-2 mb-2">
+                                            <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-2xs font-semibold rounded-full">New</span>
+                                            <span class="text-2xs text-slate-500">45 min</span>
+                                        </div>
+                                        <h3 class="text-sm font-semibold text-slate-900 dark:text-white mb-2">Organic Pest Control</h3>
+                                        <p class="text-2xs text-slate-600 dark:text-slate-400 mb-3">Learn natural methods to control coffee pests without chemicals</p>
+                                    </div>
+                                    <button class="p-2 hover:bg-white/50 dark:hover:bg-slate-700/50 rounded-lg">
+                                        <i class="fas fa-play text-blue-500"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <div class="text-2xs text-slate-500 mb-2">Upcoming Webinar</div>
+                                        <h3 class="text-sm font-semibold text-slate-900 dark:text-white mb-2">Pruning Techniques</h3>
+                                        <p class="text-2xs text-slate-600 dark:text-slate-400 mb-3">Jan 15, 2025 • 10:00 AM EAT</p>
+                                    </div>
+                                    <button class="px-3 py-1 bg-green-500 hover:bg-green-600 text-white text-2xs font-semibold rounded-lg">
+                                        Register
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Community Forum -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 card-hover border border-slate-200 dark:border-slate-700">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-users text-white"></i>
+                                </div>
+                                <div>
+                                    <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Farmers Forum</h2>
+                                    <p class="text-sm text-slate-500 dark:text-slate-400">Connect with other farmers</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm font-bold text-coffee-medium dark:text-coffee-light">247</div>
+                                <div class="text-2xs text-slate-500">Active</div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="p-3 border border-slate-200 dark:border-slate-700 rounded-xl hover:border-coffee-medium transition-colors">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-coffee-medium rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span class="text-xs text-white font-semibold">WK</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-semibold text-slate-900 dark:text-white">Wangari Kariuki</span>
+                                            <span class="text-2xs text-slate-500">2h ago</span>
+                                        </div>
+                                        <p class="text-sm text-slate-700 dark:text-slate-300 mb-2">Anyone experiencing coffee berry borer this season? What treatments are working?</p>
+                                        <div class="flex items-center space-x-3 text-2xs text-slate-500">
+                                            <button class="hover:text-coffee-medium">
+                                                <i class="fas fa-reply mr-1"></i>Reply
+                                            </button>
+                                            <button class="hover:text-coffee-medium">
+                                                <i class="fas fa-thumbs-up mr-1"></i>Like (12)
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-3 border border-slate-200 dark:border-slate-700 rounded-xl hover:border-coffee-medium transition-colors">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-coffee-leaf rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span class="text-xs text-white font-semibold">JO</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-semibold text-slate-900 dark:text-white">James Omondi</span>
+                                            <span class="text-2xs text-slate-500">5h ago</span>
+                                        </div>
+                                        <p class="text-sm text-slate-700 dark:text-slate-300 mb-2">Sharing my experience with drip irrigation - increased yield by 35%!</p>
+                                        <div class="flex items-center space-x-3 text-2xs text-slate-500">
+                                            <button class="hover:text-coffee-medium">
+                                                <i class="fas fa-reply mr-1"></i>Reply
+                                            </button>
+                                            <button class="hover:text-coffee-medium">
+                                                <i class="fas fa-thumbs-up mr-1"></i>Like (24)
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div class="mb-4 md:mb-0">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-6 h-6 bg-gradient-to-br from-coffee-medium to-coffee-leaf rounded-md flex items-center justify-center">
+                                    <i class="fas fa-seedling text-white text-xs"></i>
+                                </div>
+                                <span class="text-sm font-semibold gradient-text">Lugari Coffee Farmers Platform</span>
+                            </div>
+                            <p class="text-2xs text-slate-500 dark:text-slate-400 mt-1">Empowering farmers through technology and traceability</p>
+                        </div>
+                        <div class="text-2xs text-slate-500 dark:text-slate-400">
+                            © 2024 Lugari Coffee Farmers Cooperative. All rights reserved.
+                            <div class="mt-1 flex space-x-3">
+                                <a href="#" class="hover:text-coffee-medium">Privacy Policy</a>
+                                <a href="#" class="hover:text-coffee-medium">Terms of Service</a>
+                                <a href="#" class="hover:text-coffee-medium">Contact Support</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <!-- Sovret AI Assistant Floating Button -->
+    <button id="sovretButton"
+        class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-coffee-medium to-coffee-leaf text-white rounded-full shadow-2xl flex items-center justify-center ripple-container floating z-40 group">
+        <div class="relative">
+            <i class="fas fa-robot text-lg"></i>
+            <div class="absolute -top-1 -right-1 w-4 h-4 bg-coffee-cherry rounded-full border-2 border-white dark:border-slate-900"></div>
+        </div>
+        <div class="absolute inset-0 rounded-full border-4 border-coffee-medium/20 animate-ping"></div>
+    </button>
+
+    <!-- Sovret AI Chatbot Modal -->
+    <div id="sovretModal"
+        class="fixed bottom-24 right-6 w-96 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl hidden z-50 animate-slide-up border border-slate-200 dark:border-slate-700">
+        <div class="bg-gradient-to-r from-coffee-medium to-coffee-leaf rounded-t-2xl p-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-robot text-white"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold text-white">Sovret AI Assistant</h3>
+                        <p class="text-2xs text-coffee-light/80">24/7 Farming Advice</p>
+                    </div>
+                </div>
+                <button id="sovretClose" class="p-2 hover:bg-white/10 rounded-lg transition-colors">
+                    <i class="fas fa-times text-white/80"></i>
+                </button>
+            </div>
+        </div>
+        <div id="sovretMessages" class="h-80 p-4 overflow-y-auto hide-scrollbar bg-slate-50 dark:bg-slate-800/50">
+            <div class="mb-4 animate-fade-in">
+                <div class="flex space-x-3">
+                    <div class="w-6 h-6 bg-gradient-to-br from-coffee-medium to-coffee-leaf rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-white text-xs"></i>
+                    </div>
+                    <div>
+                        <div class="bg-white dark:bg-slate-700 rounded-2xl rounded-tl-none p-3 max-w-xs">
+                            <p class="text-sm text-slate-800 dark:text-slate-200">Jambo! I'm Sovret, your AI farming assistant. I can help with weather advice, pest control, market prices, and more. How can I assist you today? 🌱</p>
+                        </div>
+                        <div class="text-2xs text-slate-500 dark:text-slate-400 mt-1 px-2">Just now</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-slate-200 dark:border-slate-700 p-4 bg-white dark:bg-slate-800 rounded-b-2xl">
+            <div class="flex space-x-2">
+                <input type="text" id="sovretInput" placeholder="Ask about farming, weather, or prices..."
+                    class="flex-1 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-coffee-medium focus:border-transparent transition-all">
+                <button id="sendSovretMessage"
+                    class="px-4 py-3 bg-gradient-to-r from-coffee-medium to-coffee-leaf text-white rounded-xl hover:opacity-90 transition-all flex items-center justify-center">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+   <script>
+    // Wait for DOM to load
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize global variables
+        const DateTime = luxon.DateTime;
+        
+        // Hide loading screen
+        setTimeout(() => {
+            const loadingScreen = document.getElementById('loadingScreen');
+            if (loadingScreen) {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 300);
+            }
+        }, 800);
+
+        // Initialize Map with Farmer Details
+        const farmMapElement = document.getElementById('farmMap');
+        if (farmMapElement) {
+            const farmMap = L.map('farmMap').setView([0.68, 34.92], 13);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(farmMap);
+            
+            // Add farmer data
+            const farmerData = {
+                name: 'Flevian Ochoka',
+                farmId: 'LCF-0247-01',
+                area: '1.2 Ha',
+                variety: 'SL-28'
+            };
+            
+            // Add custom farm icon
+            const farmIcon = L.divIcon({
+                className: 'farm-marker',
+                html: `
+                    <div class="relative">
+                        <div class="w-12 h-12 bg-gradient-to-br from-coffee-medium/20 to-coffee-leaf/20 rounded-full border-2 border-coffee-medium flex items-center justify-center">
+                            <i class="fas fa-seedling text-coffee-medium"></i>
+                        </div>
+                        <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-coffee-leaf rounded-full border-2 border-white flex items-center justify-center">
+                            <span class="text-xs text-white font-bold">J</span>
+                        </div>
+                    </div>
+                `,
+                iconSize: [48, 48],
+                iconAnchor: [24, 48]
+            });
+            
+            // Add farm marker with custom icon and detailed popup
+            const farmMarker = L.marker([0.68, 34.92], { icon: farmIcon }).addTo(farmMap);
+            farmMarker.bindPopup(`
+                <div class="p-2 min-w-64">
+                    <h3 class="font-bold text-coffee-medium mb-2 text-base">${farmerData.name}'s Coffee Farm</h3>
+                    <div class="space-y-1 text-sm">
+                        <div class="flex">
+                            <span class="w-24 text-slate-500">Owner:</span>
+                            <span class="font-medium">${farmerData.name}</span>
+                        </div>
+                        <div class="flex">
+                            <span class="w-24 text-slate-500">Farm ID:</span>
+                            <span class="font-medium">${farmerData.farmId}</span>
+                        </div>
+                        <div class="flex">
+                            <span class="w-24 text-slate-500">Area:</span>
+                            <span class="font-medium">${farmerData.area}</span>
+                        </div>
+                        <div class="flex">
+                            <span class="w-24 text-slate-500">Variety:</span>
+                            <span class="font-medium">${farmerData.variety}</span>
+                        </div>
+                        <div class="flex">
+                            <span class="w-24 text-slate-500">Elevation:</span>
+                            <span class="font-medium">1,850 MASL</span>
+                        </div>
+                        <div class="flex">
+                            <span class="w-24 text-slate-500">Coordinates:</span>
+                            <span class="font-medium">0.68°N, 34.92°E</span>
+                        </div>
+                        <div class="flex">
+                            <span class="w-24 text-slate-500">Status:</span>
+                            <span class="font-medium text-coffee-leaf">Active • Harvesting</span>
+                        </div>
+                    </div>
+                    <div class="mt-3 pt-3 border-t border-slate-200">
+                        <button onclick="window.viewFarmDetails('${farmerData.farmId}')" 
+                            class="w-full py-2 px-3 bg-coffee-medium hover:bg-coffee-dark text-white text-xs rounded-lg transition-colors font-medium">
+                            <i class="fas fa-info-circle mr-1"></i>View Farm Details
+                        </button>
+                    </div>
+                </div>
+            `).openPopup();
+            
+            // Add farm boundary
+            const farmBounds = L.polygon([
+                [0.679, 34.915],
+                [0.679, 34.925],
+                [0.675, 34.925],
+                [0.675, 34.915]
+            ], {
+                color: '#8B4513',
+                fillColor: '#8B4513',
+                fillOpacity: 0.1,
+                weight: 2
+            }).addTo(farmMap);
+            
+            // Add farm label
+            L.marker([0.677, 34.92], {
+                icon: L.divIcon({
+                    className: 'farm-label',
+                    html: '<div class="text-xs font-bold text-coffee-medium bg-white/80 px-2 py-1 rounded-lg border border-coffee-medium/30">Main Farm Plot</div>',
+                    iconSize: [100, 30],
+                    iconAnchor: [50, 15]
+                })
+            }).addTo(farmMap);
+            
+            // Fit bounds to show farm
+            farmMap.fitBounds(farmBounds.getBounds());
+        }
+
+        // Initialize QR Code
+        const qrCodeElement = document.getElementById('farmQR');
+        if (qrCodeElement) {
+            try {
+                const qrData = {
+                    farmerId: 'LCF-0247',
+                    farmId: 'LCF-0247-01',
+                    farmerName: 'Flevian Ochoka',
+                    location: 'Lugari, Kakamega',
+                    variety: 'SL-28',
+                    area: '1.2 Ha',
+                    elevation: '1850 MASL',
+                    certification: 'Organic',
+                    lastUpdated: new Date().toISOString(),
+                    batchId: 'LCF-0247-B12'
+                };
+                
+                QRCode.toCanvas(qrCodeElement, JSON.stringify(qrData, null, 2), {
+                    width: 120,
+                    height: 120,
+                    margin: 2,
+                    color: {
+                        dark: '#8B4513',
+                        light: '#FFFFFF'
+                    },
+                    errorCorrectionLevel: 'H'
+                });
+                
+                // Add watermark text to QR
+                const canvas = qrCodeElement.querySelector('canvas');
+                if (canvas) {
+                    const ctx = canvas.getContext('2d');
+                    ctx.font = 'bold 10px Inter';
+                    ctx.fillStyle = '#8B4513';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('LCF-0247', canvas.width / 2, canvas.height - 5);
+                }
+            } catch (error) {
+                console.log('QR Code generation error:', error);
+                qrCodeElement.innerHTML = '<div class="text-sm text-slate-500">QR generation failed. Try refreshing.</div>';
+            }
+        }
+
+        // Ultra-simple STATIC chart - NO animations at all
+        const priceChartElement = document.getElementById('priceChart');
+        if (priceChartElement) {
+            try {
+                // Create a completely static chart
+                const ctx = priceChartElement.getContext('2d');
+                
+                // Draw the chart manually (no Chart.js)
+                const data = [420, 450, 480, 500, 520, 540];
+                const labels = ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'];
+                const width = priceChartElement.width;
+                const height = priceChartElement.height;
+                const padding = 30;
+                const chartWidth = width - padding * 2;
+                const chartHeight = height - padding * 2;
+                
+                // Find min and max
+                const min = Math.min(...data);
+                const max = Math.max(...data);
+                const range = max - min;
+                
+                // Clear canvas
+                ctx.clearRect(0, 0, width, height);
+                
+                // Draw grid
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.lineWidth = 1;
+                
+                // Draw line
+                ctx.beginPath();
+                ctx.strokeStyle = '#2E8B57';
+                ctx.lineWidth = 2;
+                ctx.lineJoin = 'round';
+                
+                data.forEach((value, index) => {
+                    const x = padding + (index / (data.length - 1)) * chartWidth;
+                    const y = height - padding - ((value - min) / range) * chartHeight;
+                    
+                    if (index === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                    
+                    // Draw points
+                    ctx.fillStyle = '#2E8B57';
+                    ctx.beginPath();
+                    ctx.arc(x, y, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                });
+                
+                ctx.strokeStyle = '#2E8B57';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                // Draw labels
+                ctx.fillStyle = '#64748b';
+                ctx.font = '10px Inter';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+                
+                labels.forEach((label, index) => {
+                    const x = padding + (index / (data.length - 1)) * chartWidth;
+                    ctx.fillText(label, x, height - padding + 10);
+                });
+                
+                // Draw Y-axis labels
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'middle';
+                for (let i = 0; i <= 4; i++) {
+                    const value = min + (range * i / 4);
+                    const y = height - padding - (i / 4) * chartHeight;
+                    ctx.fillText(`KSh ${Math.round(value)}`, padding - 5, y);
+                }
+                
+            } catch (error) {
+                console.log('Static canvas drawing error:', error);
+                // Fallback to simple HTML
+                priceChartElement.parentElement.innerHTML = `
+                    <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="text-sm font-medium">Market Price Trend</div>
+                            <div class="text-xs text-green-600">↑ 8% this month</div>
+                        </div>
+                        <div class="flex items-end h-24 space-x-1">
+                            <div class="flex-1 bg-green-200 rounded-t" style="height: 60%"></div>
+                            <div class="flex-1 bg-green-300 rounded-t" style="height: 70%"></div>
+                            <div class="flex-1 bg-green-400 rounded-t" style="height: 80%"></div>
+                            <div class="flex-1 bg-green-500 rounded-t" style="height: 90%"></div>
+                            <div class="flex-1 bg-green-600 rounded-t" style="height: 95%"></div>
+                            <div class="flex-1 bg-green-700 rounded-t" style="height: 100%"></div>
+                        </div>
+                        <div class="flex justify-between mt-2 text-xs text-slate-500">
+                            <span>Oct</span>
+                            <span>Nov</span>
+                            <span>Dec</span>
+                            <span>Jan</span>
+                            <span>Feb</span>
+                            <span>Mar</span>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // ================== QR CODE SCANNER FUNCTIONALITY ==================
+        const cameraButton = document.getElementById('cameraButton');
+        const cameraInput = document.getElementById('cameraInput');
+        const cameraPreview = document.getElementById('cameraPreview');
+        const qrScanner = document.getElementById('qrScanner');
+        const stopCamera = document.getElementById('stopCamera');
+        const scanResult = document.getElementById('scanResult');
+        const resultContent = document.getElementById('resultContent');
+        const clearResult = document.getElementById('clearResult');
+        const qrInput = document.getElementById('qrInput');
+
+        let scanner = null;
+        let stream = null;
+        let scanInterval = null;
+
+        // Open camera when camera button is clicked
+        if (cameraButton) {
+            cameraButton.addEventListener('click', async () => {
+                try {
+                    // Check for media devices
+                    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                        showNotification('Camera Not Supported', 'Your browser doesn\'t support camera access. Try file upload instead.', 'warning');
+                        cameraInput.click();
+                        return;
+                    }
+
+                    // Request camera access
+                    showNotification('Camera', 'Requesting camera access...', 'info');
+                    
+                    stream = await navigator.mediaDevices.getUserMedia({
+                        video: {
+                            facingMode: 'environment', // Prefer rear camera on mobile
+                            width: { ideal: 1280 },
+                            height: { ideal: 720 }
+                        }
+                    });
+
+                    // Show camera preview
+                    qrScanner.srcObject = stream;
+                    cameraPreview.classList.remove('hidden');
+                    
+                    // Start QR scanning simulation
+                    startQRScanning();
+
+                } catch (error) {
+                    console.error('Camera error:', error);
+                    
+                    if (error.name === 'NotAllowedError') {
+                        showNotification('Permission Denied', 'Camera access was denied. Please allow camera permissions in your browser settings.', 'error');
+                    } else if (error.name === 'NotFoundError') {
+                        showNotification('Camera Not Found', 'No camera found on your device. Try file upload instead.', 'error');
+                    } else {
+                        showNotification('Camera Error', 'Could not access camera. Try file upload instead.', 'error');
+                    }
+                    
+                    cameraInput.click();
+                }
+            });
+        }
+
+        // File input fallback
+        if (cameraInput) {
+            cameraInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 10 * 1024 * 1024) { // 10MB limit
+                        showNotification('File Too Large', 'Please select an image smaller than 10MB.', 'error');
+                        return;
+                    }
+                    
+                    showNotification('Processing Image', 'Scanning QR code from image...', 'info');
+                    
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        // Simulate QR scanning from image
+                        setTimeout(() => {
+                            simulateQRScanFromFile(file);
+                        }, 1500);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Stop camera
+        if (stopCamera) {
+            stopCamera.addEventListener('click', stopCameraStream);
+        }
+
+        // Clear scan result
+        if (clearResult) {
+            clearResult.addEventListener('click', () => {
+                scanResult.classList.add('hidden');
+                if (qrInput) qrInput.value = '';
+            });
+        }
+
+        // Start QR scanning simulation
+        function startQRScanning() {
+            // Clear any existing interval
+            if (scanInterval) clearInterval(scanInterval);
+            
+            // Add scanning animation
+            cameraPreview.classList.add('qr-scanning');
+            
+            // Simulate scanning process
+            let scanAttempts = 0;
+            scanInterval = setInterval(() => {
+                scanAttempts++;
+                
+                // Simulate finding a QR code (50% chance after 3 attempts)
+                if (scanAttempts >= 3 && Math.random() > 0.5) {
+                    const qrData = {
+                        farmerId: 'LCF-0247',
+                        farmerName: 'Flevian Ochoka',
+                        farmPlot: 'Main Farm Plot',
+                        area: '1.2 Ha',
+                        variety: 'SL-28',
+                        coordinates: '0.68°N, 34.92°E',
+                        lastUpdated: new Date().toISOString(),
+                        scanMethod: 'Camera Scan'
+                    };
+                    
+                    processQRResult(JSON.stringify(qrData));
+                    clearInterval(scanInterval);
+                    cameraPreview.classList.remove('qr-scanning');
+                }
+                
+                // Auto-stop after 10 attempts
+                if (scanAttempts >= 10) {
+                    clearInterval(scanInterval);
+                    cameraPreview.classList.remove('qr-scanning');
+                    showNotification('Scan Timeout', 'No QR code detected. Try adjusting camera angle or lighting.', 'warning');
+                }
+            }, 1000);
+        }
+
+        // Process QR scan result
+        function processQRResult(data) {
+            try {
+                const qrData = JSON.parse(data);
+                
+                // Stop camera
+                stopCameraStream();
+                
+                // Display result
+                resultContent.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-gradient-to-br from-coffee-medium to-coffee-leaf rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-bold text-slate-900 dark:text-white">${qrData.farmerName}</div>
+                                <div class="text-2xs text-slate-500">ID: ${qrData.farmerId}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <div class="p-2 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                                <div class="text-2xs text-slate-500">Farm Plot</div>
+                                <div class="font-medium">${qrData.farmPlot}</div>
+                            </div>
+                            <div class="p-2 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                                <div class="text-2xs text-slate-500">Area</div>
+                                <div class="font-medium">${qrData.area}</div>
+                            </div>
+                            <div class="p-2 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                                <div class="text-2xs text-slate-500">Variety</div>
+                                <div class="font-medium">${qrData.variety}</div>
+                            </div>
+                            <div class="p-2 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                                <div class="text-2xs text-slate-500">Scan Method</div>
+                                <div class="font-medium">${qrData.scanMethod || 'File Upload'}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-2">
+                            <button onclick="viewFarmOnMap('${qrData.coordinates || '0.68,34.92'}')" 
+                                class="flex-1 py-2 px-3 bg-coffee-medium/10 hover:bg-coffee-medium/20 text-coffee-medium dark:text-coffee-light rounded-lg text-xs font-medium transition-colors">
+                                <i class="fas fa-map-marker-alt mr-1"></i>View on Map
+                            </button>
+                            <button onclick="viewFarmDetails('${qrData.farmerId}')" 
+                                class="flex-1 py-2 px-3 bg-coffee-medium hover:bg-coffee-dark text-white rounded-lg text-xs font-medium transition-colors">
+                                <i class="fas fa-info-circle mr-1"></i>Details
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                scanResult.classList.remove('hidden');
+                if (qrInput) qrInput.value = qrData.farmerId;
+                
+                showNotification('QR Scanned Successfully', 
+                    `Farm: ${qrData.farmPlot}<br>Farmer: ${qrData.farmerName}`, 
+                    'success');
+                
+            } catch (error) {
+                // If not JSON, display as plain text
+                resultContent.textContent = data.length > 100 ? data.substring(0, 100) + '...' : data;
+                scanResult.classList.remove('hidden');
+                if (qrInput) qrInput.value = data.substring(0, 30);
+                
+                showNotification('QR Scanned', 'QR code content loaded', 'info');
+            }
+        }
+
+        // Simulate QR scan from file
+        function simulateQRScanFromFile(file) {
+            const qrData = {
+                farmerId: 'LCF-0247-02',
+                farmerName: 'Flevian Ochoka',
+                farmPlot: 'Secondary Plot',
+                area: '0.8 Ha',
+                variety: 'SL-34',
+                coordinates: '0.67°N, 34.91°E',
+                lastUpdated: new Date().toISOString(),
+                scanMethod: 'File Upload',
+                fileName: file.name
+            };
+            
+            processQRResult(JSON.stringify(qrData));
+        }
+
+        // Stop camera stream
+        function stopCameraStream() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+            cameraPreview.classList.add('hidden');
+            if (scanInterval) {
+                clearInterval(scanInterval);
+                scanInterval = null;
+            }
+            cameraPreview.classList.remove('qr-scanning');
+        }
+
+        // Clean up camera on page unload
+        window.addEventListener('beforeunload', stopCameraStream);
+
+        // Sidebar Toggle
+        const sidebar = document.getElementById('sidebar');
+        const toggleSidebar = document.getElementById('toggleSidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        if (toggleSidebar && sidebar) {
+            toggleSidebar.addEventListener('click', () => {
+                sidebar.classList.remove('-translate-x-full');
+                if (sidebarOverlay) sidebarOverlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+        }
+
+        if (closeSidebar && sidebar) {
+            closeSidebar.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                if (sidebarOverlay) sidebarOverlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+        }
+
+        if (sidebarOverlay && sidebar) {
+            sidebarOverlay.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                sidebarOverlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+        }
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            const themeIcon = themeToggle.querySelector('i');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            const savedTheme = localStorage.getItem('theme');
+
+            if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+                document.documentElement.classList.add('dark');
+                if (themeIcon) {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                }
+            }
+
+            themeToggle.addEventListener('click', () => {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                    if (themeIcon) {
+                        themeIcon.classList.remove('fa-sun');
+                        themeIcon.classList.add('fa-moon');
+                    }
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                    if (themeIcon) {
+                        themeIcon.classList.remove('fa-moon');
+                        themeIcon.classList.add('fa-sun');
+                    }
+                }
+            });
+        }
+
+        // Profile Dropdown
+        const profileToggle = document.getElementById('profileToggle');
+        const profileDropdown = document.getElementById('profileDropdown');
+
+        if (profileToggle && profileDropdown) {
+            profileToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                profileDropdown.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (profileToggle && !profileToggle.contains(e.target) && 
+                    profileDropdown && !profileDropdown.contains(e.target)) {
+                    profileDropdown.classList.add('hidden');
+                }
+            });
+        }
+
+        // Notification Dropdown
+        const notificationButton = document.querySelector('button .fa-bell')?.closest('button') || 
+                                  document.querySelector('[class*="notification"]')?.closest('button');
+        const notificationDropdown = document.getElementById('notificationDropdown');
+
+        if (notificationButton && notificationDropdown) {
+            notificationButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                notificationDropdown.classList.toggle('hidden');
+                
+                // Close other open dropdowns
+                if (profileDropdown) profileDropdown.classList.add('hidden');
+            });
+
+            // Close notification dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (notificationDropdown && !notificationDropdown.contains(e.target) && 
+                    notificationButton && !notificationButton.contains(e.target)) {
+                    notificationDropdown.classList.add('hidden');
+                }
+            });
+
+            // Close notification dropdown when clicking on notification items
+            document.querySelectorAll('#notificationDropdown a').forEach(item => {
+                item.addEventListener('click', () => {
+                    notificationDropdown.classList.add('hidden');
+                });
+            });
+        }
+
+        // Sovret AI Assistant
+        const sovretButton = document.getElementById('sovretButton');
+        const sovretModal = document.getElementById('sovretModal');
+        const sovretClose = document.getElementById('sovretClose');
+        const sendSovretMessage = document.getElementById('sendSovretMessage');
+        const sovretInput = document.getElementById('sovretInput');
+        const sovretMessages = document.getElementById('sovretMessages');
+
+        if (sovretButton && sovretModal) {
+            sovretButton.addEventListener('click', () => {
+                sovretModal.classList.toggle('hidden');
+                if (sovretInput) sovretInput.focus();
+            });
+        }
+
+        if (sovretClose && sovretModal) {
+            sovretClose.addEventListener('click', () => {
+                sovretModal.classList.add('hidden');
+            });
+        }
+
+        if (sendSovretMessage && sovretInput && sovretMessages) {
+            sendSovretMessage.addEventListener('click', sendSovretMessageHandler);
+        }
+
+        if (sovretInput && sendSovretMessage) {
+            sovretInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendSovretMessageHandler();
+                }
+            });
+        }
+
+        function sendSovretMessageHandler() {
+            const message = sovretInput.value.trim();
+            if (message && sovretMessages) {
+                // Add user message
+                const userMessage = document.createElement('div');
+                userMessage.className = 'mb-4 flex justify-end animate-fade-in';
+                userMessage.innerHTML = `
+                    <div class="flex space-x-2">
+                        <div class="flex-1 max-w-xs">
+                            <div class="bg-gradient-to-r from-coffee-medium to-coffee-leaf text-white rounded-2xl rounded-tr-none p-3">
+                                <p class="text-sm">${message}</p>
+                            </div>
+                            <div class="text-2xs text-slate-500 dark:text-slate-400 mt-1 px-2 text-right">Just now</div>
+                        </div>
+                        <div class="w-6 h-6 bg-gradient-to-br from-coffee-medium to-coffee-leaf rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-xs font-semibold text-white">FO</span>
+                        </div>
+                    </div>
+                `;
+                sovretMessages.appendChild(userMessage);
+
+                // Clear input
+                sovretInput.value = '';
+
+                // Scroll to bottom
+                sovretMessages.scrollTop = sovretMessages.scrollHeight;
+
+                // Simulate AI response
+                setTimeout(() => {
+                    const aiResponse = getSovretResponse(message);
+                    const aiMessage = document.createElement('div');
+                    aiMessage.className = 'mb-4 animate-fade-in';
+                    aiMessage.innerHTML = `
+                        <div class="flex space-x-2">
+                            <div class="w-6 h-6 bg-gradient-to-br from-coffee-medium to-coffee-leaf rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot text-white text-xs"></i>
+                            </div>
+                            <div>
+                                <div class="bg-white dark:bg-slate-700 rounded-2xl rounded-tl-none p-3 max-w-xs">
+                                    <p class="text-sm text-slate-800 dark:text-slate-200">${aiResponse}</p>
+                                </div>
+                                <div class="text-2xs text-slate-500 dark:text-slate-400 mt-1 px-2">Just now</div>
+                            </div>
+                        </div>
+                    `;
+                    sovretMessages.appendChild(aiMessage);
+                    sovretMessages.scrollTop = sovretMessages.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        function getSovretResponse(message) {
+            const responses = [
+                "For coffee berry borer control, I recommend using Beauveria bassiana fungus. Apply 2kg per acre mixed with water. Avoid chemical pesticides during flowering.",
+                "Based on current weather patterns, expect moderate rainfall next week. Ideal for fertilizer application but delay pruning until dry conditions return.",
+                "Nairobi Exchange prices are trending upward. Current AA grade is KSh 520/kg. Consider holding your stock for another week for better prices.",
+                "For your SL-28 variety at 1,850m elevation, optimal fertilizer is NPK 17:17:17 at 250kg per acre. Apply after the first rains.",
+                "Coffee leaf rust symptoms include yellow-orange powdery spots. Remove infected leaves and apply copper-based fungicides every 14 days.",
+                "Drip irrigation can increase yield by 30-40%. System cost is about KSh 50,000 per acre with 50% government subsidy available."
+            ];
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+
+        // Global Sovret function
+        window.askSovret = function (question) {
+            if (sovretModal && sovretInput) {
+                if (sovretModal.classList.contains('hidden')) {
+                    sovretModal.classList.remove('hidden');
+                }
+                sovretInput.value = question;
+                sendSovretMessageHandler();
+            }
+        };
+
+        // M-Pesa Autofill
+        window.autofillMpesa = function () {
+            const mpesaInput = document.getElementById('mpesaNumber');
+            if (mpesaInput) {
+                // Simulate Safaricom Identity API call
+                const fakeMpesaNumber = '0723123456';
+                mpesaInput.value = fakeMpesaNumber;
+                
+                // Show notification
+                showNotification('M-Pesa Auto-filled', 'Phone number retrieved via Safaricom Identity API', 'success');
+            }
+        };
+
+        // WhatsApp Templates
+        window.sendWhatsAppTemplate = function (template) {
+            const templates = {
+                'register': 'Hi, I want to register as a new farmer on the Lugari Coffee Platform.',
+                'prices': 'What are the current coffee prices at Nairobi Exchange?',
+                'weather': 'Can you give me the weather forecast for Lugari this week?',
+                'support': 'I need help with my farm registration process.'
+            };
+            
+            if (templates[template]) {
+                showNotification('WhatsApp Template', `Template message ready to send: "${templates[template]}"`, 'info');
+                
+                // In production, this would trigger WhatsApp API
+                const whatsappUrl = `https://wa.me/254700123456?text=${encodeURIComponent(templates[template])}`;
+                window.open(whatsappUrl, '_blank');
+            }
+        };
+
+        // ================== ENHANCED QR DOWNLOAD FUNCTION ==================
+        window.downloadQR = function () {
+            try {
+                const canvas = document.querySelector('#farmQR canvas');
+                if (!canvas) {
+                    throw new Error('QR canvas not found');
+                }
+
+                // Create download link
+                const link = document.createElement('a');
+                const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+                const filename = `lugari-farm-${timestamp}.png`;
+                
+                link.download = filename;
+                link.href = canvas.toDataURL('image/png', 1.0);
+                
+                // Create enhanced QR with additional info
+                const enhancedCanvas = document.createElement('canvas');
+                enhancedCanvas.width = 400;
+                enhancedCanvas.height = 500;
+                const ctx = enhancedCanvas.getContext('2d');
+                
+                // Background
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(0, 0, 400, 500);
+                
+                // Header
+                ctx.fillStyle = '#8B4513';
+                ctx.fillRect(0, 0, 400, 80);
+                
+                // Header text
+                ctx.fillStyle = '#FFFFFF';
+                ctx.font = 'bold 16px Inter';
+                ctx.textAlign = 'center';
+                ctx.fillText('LUGARI COFFEE FARMERS COOPERATIVE', 200, 30);
+                ctx.font = '12px Inter';
+                ctx.fillText('Farm Traceability QR Code', 200, 50);
+                
+                // QR code (centered)
+                ctx.drawImage(canvas, 150, 100, 100, 100);
+                
+                // Farm info
+                ctx.fillStyle = '#1e293b';
+                ctx.font = 'bold 14px Inter';
+                ctx.textAlign = 'left';
+                ctx.fillText('FARM INFORMATION', 40, 230);
+                
+                ctx.font = '12px Inter';
+                ctx.fillStyle = '#475569';
+                const farmInfo = [
+                    ['Farmer:', 'Flevian Ochoka'],
+                    ['Farm ID:', 'LCF-0247-01'],
+                    ['Area:', '1.2 Ha'],
+                    ['Variety:', 'SL-28 Arabica'],
+                    ['Location:', 'Lugari, Kakamega'],
+                    ['Elevation:', '1,850 MASL'],
+                    ['Date:', new Date().toLocaleDateString()]
+                ];
+                
+                farmInfo.forEach(([label, value], index) => {
+                    ctx.fillText(label, 40, 260 + (index * 25));
+                    ctx.fillStyle = '#1e293b';
+                    ctx.fillText(value, 140, 260 + (index * 25));
+                    ctx.fillStyle = '#475569';
+                });
+                
+                // Footer
+                ctx.fillStyle = '#f8fafc';
+                ctx.fillRect(0, 440, 400, 60);
+                ctx.fillStyle = '#64748b';
+                ctx.font = '10px Inter';
+                ctx.textAlign = 'center';
+                ctx.fillText('Scan QR code to verify farm information', 200, 465);
+                ctx.fillText('Lugari Coffee Platform • lugaricoffee.co.ke', 200, 480);
+                
+                // Use enhanced QR for download
+                link.href = enhancedCanvas.toDataURL('image/png');
+                
+                // Create temporary directory structure in memory
+                const tempData = {
+                    filename: filename,
+                    dataUrl: link.href,
+                    timestamp: new Date().toISOString(),
+                    farmerId: 'LCF-0247',
+                    farmId: 'LCF-0247-01',
+                    type: 'farm_qr'
+                };
+                
+                // Store in localStorage as temporary file (simulating temp directory)
+                const tempFiles = JSON.parse(localStorage.getItem('lugari_temp_files') || '[]');
+                tempFiles.push(tempData);
+                localStorage.setItem('lugari_temp_files', JSON.stringify(tempFiles.slice(-20))); // Keep last 20 files
+                
+                // Trigger download
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Show detailed notification
+                showNotification('QR Code Downloaded', 
+                    `Enhanced farm QR code saved<br>
+                     <span class="text-2xs text-slate-500">${filename} (400×500px)</span><br>
+                     <span class="text-2xs text-slate-500">Includes farm information and branding</span>`, 
+                    'success');
+                
+                // Open preview in new tab
+                setTimeout(() => {
+                    const previewWindow = window.open();
+                    if (previewWindow) {
+                        previewWindow.document.write(`
+                            <html>
+                                <head>
+                                    <title>Farm QR Code - ${filename}</title>
+                                    <style>
+                                        body { 
+                                            font-family: 'Inter', sans-serif; 
+                                            margin: 0; 
+                                            padding: 0; 
+                                            background: #f8fafc;
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            min-height: 100vh;
+                                        }
+                                        .preview-container { 
+                                            background: white; 
+                                            border-radius: 16px; 
+                                            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                                            overflow: hidden;
+                                            max-width: 420px;
+                                            margin: 20px;
+                                        }
+                                        .header { 
+                                            background: linear-gradient(135deg, #8B4513, #2E8B57);
+                                            color: white; 
+                                            padding: 25px; 
+                                            text-align: center;
+                                        }
+                                        .qr-display { 
+                                            padding: 30px; 
+                                            text-align: center; 
+                                            border-bottom: 1px solid #e5e7eb;
+                                        }
+                                        .qr-display img { 
+                                            max-width: 200px; 
+                                            height: auto;
+                                            border: 2px solid #e5e7eb;
+                                            border-radius: 8px;
+                                            padding: 10px;
+                                        }
+                                        .info { 
+                                            padding: 25px; 
+                                        }
+                                        .info-item { 
+                                            display: flex; 
+                                            justify-content: space-between; 
+                                            margin-bottom: 12px;
+                                            padding-bottom: 12px;
+                                            border-bottom: 1px solid #f1f5f9;
+                                        }
+                                        .actions { 
+                                            padding: 20px; 
+                                            background: #f8fafc; 
+                                            display: flex; 
+                                            gap: 10px; 
+                                        }
+                                        button { 
+                                            flex: 1; 
+                                            padding: 12px; 
+                                            border: none; 
+                                            border-radius: 8px; 
+                                            font-weight: 600; 
+                                            cursor: pointer; 
+                                            font-family: inherit;
+                                            transition: all 0.2s;
+                                        }
+                                        .print-btn { 
+                                            background: #8B4513; 
+                                            color: white; 
+                                        }
+                                        .print-btn:hover { 
+                                            background: #6d3610; 
+                                        }
+                                        .close-btn { 
+                                            background: #e5e7eb; 
+                                            color: #475569; 
+                                        }
+                                        .close-btn:hover { 
+                                            background: #d1d5db; 
+                                        }
+                                    </style>
+                                </head>
+                                <body>
+                                    <div class="preview-container">
+                                        <div class="header">
+                                            <h1 style="margin: 0 0 8px 0; font-size: 18px;">Farm QR Code</h1>
+                                            <p style="margin: 0; opacity: 0.9; font-size: 14px;">Flevian Ochoka • LCF-0247-01</p>
+                                        </div>
+                                        
+                                        <div class="qr-display">
+                                            <img src="${link.href}" alt="Farm QR Code">
+                                            <p style="margin: 15px 0 0 0; color: #64748b; font-size: 13px;">Scan with Lugari Coffee App</p>
+                                        </div>
+                                        
+                                        <div class="info">
+                                            <div class="info-item">
+                                                <span style="color: #64748b;">File Name:</span>
+                                                <span style="font-weight: 600;">${filename}</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <span style="color: #64748b;">Downloaded:</span>
+                                                <span>${new Date().toLocaleString()}</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <span style="color: #64748b;">Dimensions:</span>
+                                                <span>400 × 500 pixels</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <span style="color: #64748b;">Format:</span>
+                                                <span>PNG (High Quality)</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="actions">
+                                            <button class="print-btn" onclick="window.print()">
+                                                <i class="fas fa-print" style="margin-right: 6px;"></i>Print QR
+                                            </button>
+                                            <button class="close-btn" onclick="window.close()">
+                                                Close Preview
+                                            </button>
+                                        </div>
+                                    </div>
+                                </body>
+                            </html>
+                        `);
+                    }
+                }, 300);
+                
+            } catch (error) {
+                console.error('QR download error:', error);
+                showNotification('Download Failed', 'Could not download QR code. Please try again.', 'error');
+                
+                // Fallback: Create a simple QR code
+                createFallbackQR();
+            }
+        };
+
+        // Fallback QR creation
+        function createFallbackQR() {
+            try {
+                const qrContainer = document.getElementById('farmQR');
+                if (!qrContainer) return;
+                
+                // Create fallback data
+                const fallbackData = {
+                    farmerId: 'LCF-0247',
+                    name: 'Flevian Ochoka',
+                    farm: 'Main Farm Plot',
+                    area: '1.2 Ha',
+                    variety: 'SL-28',
+                    date: new Date().toISOString().split('T')[0],
+                    type: 'fallback_qr'
+                };
+                
+                // Clear and create new QR
+                qrContainer.innerHTML = '';
+                QRCode.toCanvas(qrContainer, JSON.stringify(fallbackData), {
+                    width: 120,
+                    height: 120,
+                    margin: 2,
+                    color: {
+                        dark: '#8B4513',
+                        light: '#FFFFFF'
+                    },
+                    errorCorrectionLevel: 'H'
+                }, function(error) {
+                    if (!error) {
+                        showNotification('QR Regenerated', 'New QR code created. Try downloading again.', 'info');
+                    }
+                });
+            } catch (e) {
+                console.error('Fallback QR error:', e);
+            }
+        }
+
+        // View farm on map
+        window.viewFarmOnMap = function(coordinates) {
+            if (farmMapElement && window.farmMap) {
+                const [lat, lng] = coordinates.split(',').map(Number);
+                if (lat && lng) {
+                    window.farmMap.setView([lat, lng], 15);
+                    showNotification('Map Navigation', 'Centered map on farm location', 'info');
+                }
+            }
+        };
+
+        // View farm details
+        window.viewFarmDetails = function(farmId) {
+            showNotification('Farm Details', `Loading details for farm: ${farmId}`, 'info');
+            // In production, this would navigate to farm details page
+            setTimeout(() => {
+                showNotification('Farm Information', 
+                    `<strong>Farm:</strong> Main Plot (${farmId})<br>
+                     <strong>Owner:</strong> Flevian Ochoka<br>
+                     <strong>Area:</strong> 1.2 Ha<br>
+                     <strong>Variety:</strong> SL-28 Arabica<br>
+                     <strong>Status:</strong> Active - Harvest Season`, 
+                    'info');
+            }, 500);
+        };
+
+        // Notification System
+        function showNotification(title, message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-6 right-6 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-4 z-50 animate-slide-up border border-slate-200 dark:border-slate-700 max-w-sm`;
+            notification.style.transition = 'all 0.3s ease';
+
+            let icon = 'info-circle';
+            let iconColor = 'coffee-medium';
+
+            switch (type) {
+                case 'success':
+                    icon = 'check-circle';
+                    iconColor = 'coffee-leaf';
+                    break;
+                case 'error':
+                    icon = 'exclamation-circle';
+                    iconColor = 'coffee-cherry';
+                    break;
+                case 'warning':
+                    icon = 'exclamation-triangle';
+                    iconColor = 'amber-500';
+                    break;
+            }
+
+            notification.innerHTML = `
+                <div class="flex space-x-3">
+                    <div class="w-10 h-10 bg-${iconColor} rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-${icon} text-white"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h4 class="text-sm font-semibold text-slate-900 dark:text-white mb-1">${title}</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">${message}</p>
+                        <div class="text-2xs text-slate-500 dark:text-slate-400 mt-2">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+                    </div>
+                    <button class="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors self-start close-notification">
+                        <i class="fas fa-times text-slate-400"></i>
+                    </button>
+                </div>
+            `;
+
+            document.body.appendChild(notification);
+
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 300);
+                }
+            }, 5000);
+
+            // Close button
+            notification.querySelector('.close-notification').addEventListener('click', () => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            });
+        }
+
+        // Initialize some sample notifications
+        setTimeout(() => {
+            showNotification('Welcome to Lugari Platform', 'Your coffee farming dashboard is ready! Track your farm, monitor prices, and grow better coffee.', 'success');
+        }, 1000);
+
+        // Supply Chain Animation
+        function animateSupplyChain() {
+            const steps = document.querySelectorAll('.supply-chain-step');
+            let delay = 0;
+            
+            steps.forEach((step, index) => {
+                setTimeout(() => {
+                    step.classList.add('completed');
+                    if (index === 2) {
+                        step.classList.add('active');
+                    }
+                }, delay);
+                delay += 1000;
+            });
+        }
+        
+        // Start animation after page load
+        setTimeout(animateSupplyChain, 2000);
+
+        // Progress Rings
+        document.querySelectorAll('.progress-ring-circle').forEach(circle => {
+            const progress = circle.dataset.progress;
+            const radius = circle.r.baseVal.value;
+            const circumference = 2 * Math.PI * radius;
+            const offset = circumference - (progress / 100) * circumference;
+            circle.style.strokeDasharray = `${circumference} ${circumference}`;
+            circle.style.strokeDashoffset = offset;
+        });
+
+        // Smooth Scrolling for Navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const target = document.querySelector(targetId);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ctrl + S: Open Sovret
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                if (sovretModal) {
+                    sovretModal.classList.toggle('hidden');
+                }
+            }
+
+            // Ctrl + M: Open Map
+            if (e.ctrlKey && e.key === 'm') {
+                e.preventDefault();
+                const farmMapSection = document.querySelector('#farm-map');
+                if (farmMapSection) {
+                    farmMapSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+
+            // Ctrl + Q: Scan QR
+            if (e.ctrlKey && e.key === 'q') {
+                e.preventDefault();
+                if (cameraButton) {
+                    cameraButton.click();
+                }
+            }
+
+            // Escape: Close modals
+            if (e.key === 'Escape') {
+                if (sovretModal) sovretModal.classList.add('hidden');
+                if (notificationDropdown) notificationDropdown.classList.add('hidden');
+                if (profileDropdown) profileDropdown.classList.add('hidden');
+                stopCameraStream();
+            }
+        });
+
+        // Welcome message
+        console.log('Lugari Coffee Farmers Platform initialized successfully!');
+
+        // Fix all broken buttons in the dashboard
+        fixAllButtons();
+    });
+
+    // Function to fix all broken buttons
+    function fixAllButtons() {
+        // Fix AI Avatar button
+        const aiAvatarBtn = document.getElementById('aiAvatarBtn');
+        if (aiAvatarBtn) {
+            aiAvatarBtn.addEventListener('click', () => {
+                const sovretModal = document.getElementById('sovretModal');
+                if (sovretModal) {
+                    sovretModal.classList.remove('hidden');
+                    const sovretInput = document.getElementById('sovretInput');
+                    if (sovretInput) sovretInput.focus();
+                }
+            });
+        }
+
+        // Fix Ripple Effect buttons
+        document.querySelectorAll('.ripple-container').forEach(btn => {
+            btn.addEventListener('click', createRipple);
+        });
+
+        // Fix all feature buttons in the AI card
+        document.querySelectorAll('button[onclick*="askQuestion"]').forEach(btn => {
+            const onclick = btn.getAttribute('onclick');
+            const question = onclick.match(/'([^']+)'/)[1];
+            btn.onclick = () => askSovret(question);
+        });
+
+        // Fix all navigation links in sidebar
+        document.querySelectorAll('aside a[href]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('http') && href !== '#') {
+                    e.preventDefault();
+                    // In a real app, this would navigate to the page
+                    showNotification('Navigation', `Would navigate to ${href} in production`, 'info');
+                }
+            });
+        });
+
+        // Fix sign out buttons
+        document.querySelectorAll('button:contains("Sign Out"), a:contains("Sign Out")').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (confirm('Are you sure you want to sign out?')) {
+                    showNotification('Signed Out', 'You have been successfully signed out', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'index.php';
+                    }, 1500);
+                }
+            });
+        });
+
+        // Fix all tooltips
+        document.querySelectorAll('.tooltip').forEach(tooltip => {
+            tooltip.addEventListener('mouseenter', (e) => {
+                const tooltipText = tooltip.querySelector('.tooltip-text');
+                if (tooltipText) {
+                    tooltipText.style.visibility = 'visible';
+                    tooltipText.style.opacity = '1';
+                }
+            });
+
+            tooltip.addEventListener('mouseleave', (e) => {
+                const tooltipText = tooltip.querySelector('.tooltip-text');
+                if (tooltipText) {
+                    tooltipText.style.visibility = 'hidden';
+                    tooltipText.style.opacity = '0';
+                }
+            });
+        });
+    }
+
+    // Ripple effect function
+    function createRipple(event) {
+        const button = event.currentTarget;
+        const ripple = document.createElement('span');
+        const rect = button.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = event.clientX - rect.left - size / 2;
+        const y = event.clientY - rect.top - size / 2;
+
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.classList.add('ripple-effect');
+
+        button.appendChild(ripple);
+
+        setTimeout(() => {
+            ripple.remove();
+        }, 600);
+    }
+
+    // View QR history
+    window.viewQRHistory = function() {
+        const tempFiles = JSON.parse(localStorage.getItem('lugari_temp_files') || '[]');
+        if (tempFiles.length === 0) {
+            showNotification('No History', 'No previous QR downloads found.', 'info');
+            return;
+        }
+        
+        let historyHTML = '<div class="space-y-3 max-h-96 overflow-y-auto">';
+        tempFiles.reverse().forEach((file, index) => {
+            historyHTML += `
+                <div class="p-4 border border-slate-200 dark:border-slate-700 rounded-xl hover:border-coffee-medium transition-colors">
+                    <div class="flex items-center justify-between mb-2">
+                        <div>
+                            <span class="text-sm font-medium text-slate-900 dark:text-white">${file.filename}</span>
+                            <div class="text-2xs text-slate-500">${new Date(file.timestamp).toLocaleString()}</div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="redownloadQR(${tempFiles.length - 1 - index})" 
+                                class="px-3 py-1 bg-coffee-medium hover:bg-coffee-dark text-white text-xs rounded-lg">
+                                Download
+                            </button>
+                            <button onclick="deleteQRFile(${tempFiles.length - 1 - index})" 
+                                class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs rounded-lg">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-2xs text-slate-500">
+                        Farm: ${file.farmId} • Type: ${file.type || 'QR Code'}
+                    </div>
+                </div>
+            `;
+        });
+        historyHTML += '</div>';
+        
+        // Show in modal
+        showModal('QR Download History', historyHTML);
+    };
+
+    // Function to redownload from history
+    window.redownloadQR = function(index) {
+        const tempFiles = JSON.parse(localStorage.getItem('lugari_temp_files') || '[]');
+        if (tempFiles[index]) {
+            const link = document.createElement('a');
+            link.download = tempFiles[index].filename;
+            link.href = tempFiles[index].dataUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showNotification('Redownloaded', `QR code ${tempFiles[index].filename} downloaded again`, 'success');
+        }
+    };
+
+    // Function to delete from history
+    window.deleteQRFile = function(index) {
+        const tempFiles = JSON.parse(localStorage.getItem('lugari_temp_files') || '[]');
+        if (tempFiles[index]) {
+            const filename = tempFiles[index].filename;
+            tempFiles.splice(index, 1);
+            localStorage.setItem('lugari_temp_files', JSON.stringify(tempFiles));
+            
+            showNotification('File Deleted', `${filename} removed from history`, 'success');
+            
+            // Refresh history view if modal is open
+            setTimeout(() => {
+                if (document.querySelector('.modal-content')) {
+                    viewQRHistory();
+                }
+            }, 500);
+        }
+    };
+
+    // Simple modal function
+    function showModal(title, content) {
+        const modal = document.createElement('div');
+        modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50';
+        modal.innerHTML = `
+            <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full max-h-[90vh] overflow-hidden animate-slide-up">
+                <div class="p-6 border-b border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-slate-900 dark:text-white">${title}</h3>
+                        <button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg close-modal">
+                            <i class="fas fa-times text-slate-500"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6 overflow-y-auto max-h-[60vh]">
+                    ${content}
+                </div>
+                <div class="p-6 border-t border-slate-200 dark:border-slate-700 text-center">
+                    <button class="px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg text-sm font-medium close-modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Close buttons
+        modal.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', () => {
+                modal.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(modal);
+                }, 300);
+            });
+        });
+        
+        // Close on backdrop click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(modal);
+                }, 300);
+            }
+        });
+    }
+    // Seedlings & Inputs Functions
+window.orderSeedlings = function(dealer) {
+    showNotification('Order Initiated', `Starting order from ${dealer}. Please complete the order form.`, 'info');
+    
+    // Auto-fill dealer in form
+    const dealerSelect = document.querySelector('select');
+    if (dealerSelect) {
+        for (let option of dealerSelect.options) {
+            if (option.text.includes(dealer)) {
+                dealerSelect.value = option.value;
+                break;
+            }
+        }
+    }
+};
+
+window.orderInputs = function(dealer) {
+    showNotification('Product Catalog', `Opening ${dealer} product catalog...`, 'info');
+    setTimeout(() => {
+        showNotification('Catalog Loaded', `Browse ${dealer}'s products and add to cart.`, 'success');
+    }, 1000);
+};
+
+window.submitOrder = function() {
+    showNotification('Order Submitted', 'Your order has been submitted to the dealer. You will receive confirmation via SMS.', 'success');
+    
+    // Simulate order processing
+    setTimeout(() => {
+        showNotification('Order Confirmed', 'Dealer has accepted your order. Delivery expected in 3-5 business days.', 'success');
+    }, 2000);
+};
+
+window.consultSovret = function(topic) {
+    const questions = {
+        'inputs': 'What is the best fertilizer for SL-28 coffee at 1,850m elevation?',
+        'seedlings': 'How many coffee seedlings do I need for 1 hectare?',
+        'pests': 'What organic pest control is recommended for coffee berry borer?'
+    };
+    
+    const question = questions[topic] || 'What inputs do I need for coffee farming?';
+    askSovret(question);
+};
+
+window.applySubsidy = function() {
+    showNotification('Subsidy Application', 'Opening subsidy application form...', 'info');
+    
+    // In production, this would open a subsidy application form
+    setTimeout(() => {
+        showNotification('Application Ready', 
+            'Complete the subsidy application form.<br>' +
+            '<span class="text-2xs">Requirements: Member ID, Farm Size, Previous Yield</span>', 
+            'info');
+    }, 1000);
+};
+
+// ================== NETWORK STATUS MONITOR ==================
+// Network Status Monitoring
+function initializeNetworkStatusMonitor() {
+    // Create network status indicator
+    const networkIndicator = document.createElement('div');
+    networkIndicator.id = 'networkStatusIndicator';
+    networkIndicator.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500';
+    
+    // Add to DOM
+    document.body.appendChild(networkIndicator);
+    
+    // Online/Offline event handlers
+    function updateNetworkStatus() {
+        const isOnline = navigator.onLine;
+        
+        if (isOnline) {
+            // Online - show success notification
+            networkIndicator.innerHTML = `
+                <div class="bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg flex items-center space-x-3 animate-slide-up">
+                    <i class="fas fa-wifi text-xl animate-pulse"></i>
+                    <div>
+                        <div class="font-semibold">Back Online</div>
+                        <div class="text-sm opacity-90">Connection restored. Syncing data...</div>
+                    </div>
+                </div>
+            `;
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                networkIndicator.innerHTML = '';
+            }, 5000);
+            
+            // Sync any pending data
+            syncPendingData();
+            
+        } else {
+            // Offline - show warning notification
+            networkIndicator.innerHTML = `
+                <div class="bg-amber-500 text-white px-6 py-3 rounded-xl shadow-lg flex items-center space-x-3 animate-slide-up">
+                    <i class="fas fa-exclamation-triangle text-xl"></i>
+                    <div>
+                        <div class="font-semibold">Offline Mode</div>
+                        <div class="text-sm opacity-90">Limited functionality. Reconnecting...</div>
+                    </div>
+                </div>
+            `;
+            
+            // Don't auto-hide offline status
+            showPersistentOfflineWarning();
+        }
+    }
+    
+    // Show persistent offline warning in header
+    function showPersistentOfflineWarning() {
+        // Check if warning already exists
+        if (document.getElementById('offlineHeaderWarning')) return;
+        
+        const header = document.querySelector('header');
+        if (header) {
+            const warning = document.createElement('div');
+            warning.id = 'offlineHeaderWarning';
+            warning.className = 'bg-amber-500 text-white text-sm font-medium py-2 px-4 text-center';
+            warning.innerHTML = `
+                <div class="container mx-auto flex items-center justify-center space-x-2">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>You're offline. Some features may be limited.</span>
+                    <button onclick="retryConnection()" class="ml-4 px-3 py-1 bg-white text-amber-700 rounded-lg text-xs font-semibold hover:bg-amber-50">
+                        Retry Connection
+                    </button>
+                </div>
+            `;
+            
+            // Insert after header
+            header.parentNode.insertBefore(warning, header.nextSibling);
+        }
+    }
+    
+    // Remove persistent offline warning
+    function removePersistentOfflineWarning() {
+        const warning = document.getElementById('offlineHeaderWarning');
+        if (warning) {
+            warning.remove();
+        }
+    }
+    
+    // Sync pending data when back online
+    function syncPendingData() {
+        const pendingOperations = JSON.parse(localStorage.getItem('pendingOperations') || '[]');
+        
+        if (pendingOperations.length > 0) {
+            showNotification('Sync Started', `Syncing ${pendingOperations.length} pending operations...`, 'info');
+            
+            // Simulate sync process
+            setTimeout(() => {
+                showNotification('Sync Complete', 'All offline data has been synchronized.', 'success');
+                localStorage.setItem('pendingOperations', '[]');
+            }, 2000);
+        }
+    }
+    
+    // Manual retry connection
+    window.retryConnection = function() {
+        showNotification('Connection Retry', 'Attempting to reconnect...', 'info');
+        
+        if (navigator.onLine) {
+            removePersistentOfflineWarning();
+            updateNetworkStatus();
+        } else {
+            showNotification('Still Offline', 'Unable to connect. Check your internet connection.', 'error');
+        }
+    }
+    
+    // Store operations when offline
+    window.storeOfflineOperation = function(operation) {
+        if (!navigator.onLine) {
+            const pending = JSON.parse(localStorage.getItem('pendingOperations') || '[]');
+            operation.timestamp = new Date().toISOString();
+            pending.push(operation);
+            localStorage.setItem('pendingOperations', JSON.stringify(pending));
+            
+            showNotification('Saved Offline', 
+                'Operation saved locally. Will sync when back online.<br>' +
+                '<span class="text-2xs">Pending operations: ' + pending.length + '</span>', 
+                'info');
+            return true;
+        }
+        return false;
+    }
+    
+    // Initial status check
+    updateNetworkStatus();
+    removePersistentOfflineWarning();
+    
+    // Event listeners
+    window.addEventListener('online', updateNetworkStatus);
+    window.addEventListener('offline', updateNetworkStatus);
+    
+    // Monitor connection quality
+    if ('connection' in navigator) {
+        const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        
+        if (connection) {
+            connection.addEventListener('change', function() {
+                const effectiveType = connection.effectiveType;
+                const downlink = connection.downlink;
+                
+                if (effectiveType === 'slow-2g' || effectiveType === '2g') {
+                    showNotification('Slow Connection', 
+                        'Network speed is limited. Some features may load slowly.<br>' +
+                        '<span class="text-2xs">Speed: ' + downlink + ' Mbps</span>', 
+                        'warning', 3000);
+                }
+            });
+        }
+    }
+    
+    // Log network status changes
+    console.log('Network Status Monitor initialized');
+}
+
+// ================== OFFLINE FEATURE MANAGEMENT ==================
+function initializeOfflineFeatures() {
+    // Offline-capable features
+    const offlineFeatures = {
+        qrScanning: true,
+        farmMapping: true,
+        dataEntry: true,
+        orderDrafts: true,
+        messageDrafts: true
+    };
+    
+    // Check feature availability
+    window.isFeatureAvailable = function(feature) {
+        if (navigator.onLine) return true;
+        return offlineFeatures[feature] || false;
+    }
+    
+    // Offline data storage
+    window.offlineStorage = {
+        set: function(key, data) {
+            const offlineData = JSON.parse(localStorage.getItem('offlineData') || '{}');
+            offlineData[key] = {
+                data: data,
+                timestamp: new Date().toISOString(),
+                synced: false
+            };
+            localStorage.setItem('offlineData', JSON.stringify(offlineData));
+        },
+        
+        get: function(key) {
+            const offlineData = JSON.parse(localStorage.getItem('offlineData') || '{}');
+            return offlineData[key]?.data || null;
+        },
+        
+        getAll: function() {
+            return JSON.parse(localStorage.getItem('offlineData') || '{}');
+        },
+        
+        clear: function() {
+            localStorage.removeItem('offlineData');
+        }
+    };
+    
+    // Show offline UI indicators
+    function updateOfflineUI() {
+        const isOnline = navigator.onLine;
+        
+        // Update buttons and forms
+        document.querySelectorAll('[data-requires-online]').forEach(element => {
+            if (!isOnline) {
+                element.classList.add('opacity-50', 'cursor-not-allowed');
+                element.setAttribute('title', 'Requires internet connection');
+            } else {
+                element.classList.remove('opacity-50', 'cursor-not-allowed');
+                element.removeAttribute('title');
+            }
+        });
+        
+        // Update navigation items
+        document.querySelectorAll('a[href^="#"], button[onclick]').forEach(element => {
+            const href = element.getAttribute('href');
+            const onclick = element.getAttribute('onclick');
+            
+            // Check if feature requires online
+            if (href && href.includes('market') || onclick && onclick.includes('sync')) {
+                if (!isOnline) {
+                    element.classList.add('offline-disabled');
+                } else {
+                    element.classList.remove('offline-disabled');
+                }
+            }
+        });
+    }
+    
+    // Periodically check for connection
+    setInterval(updateOfflineUI, 10000);
+    updateOfflineUI();
+    
+    console.log('Offline Features initialized');
+}
+
+// ================== INITIALIZE NETWORK MONITOR ==================
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit after initial page load
+    setTimeout(() => {
+        initializeNetworkStatusMonitor();
+        initializeOfflineFeatures();
+        
+        // Add CSS for offline state
+        const style = document.createElement('style');
+        style.textContent = `
+            .offline-disabled {
+                opacity: 0.5 !important;
+                cursor: not-allowed !important;
+                pointer-events: none !important;
+            }
+            
+            #networkStatusIndicator {
+                animation: slideInDown 0.5s ease-out;
+            }
+            
+            @keyframes slideInDown {
+                from {
+                    transform: translate(-50%, -100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translate(-50%, 0);
+                    opacity: 1;
+                }
+            }
+            
+            .connection-pulse {
+                animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Test notification
+        if (!navigator.onLine) {
+            setTimeout(() => {
+                showNotification('Offline Mode Active', 
+                    'You are currently offline. Some features are available:<br>' +
+                    '• QR Code Scanning<br>' +
+                    '• Farm Data Entry<br>' +
+                    '• Order Drafts<br>' +
+                    '<span class="text-2xs">Connect to internet for full functionality</span>', 
+                    'warning');
+            }, 1500);
+        }
+    }, 1000);
+});
+
+// ================== OFFLINE QR SCANNING ENHANCEMENT ==================
+// Enhance existing QR scanning for offline
+const originalQRProcess = window.processQRResult;
+window.processQRResult = function(data) {
+    try {
+        // Store scan result offline
+        if (!navigator.onLine) {
+            const offlineScans = JSON.parse(localStorage.getItem('offlineQRScans') || '[]');
+            offlineScans.push({
+                data: data,
+                timestamp: new Date().toISOString(),
+                location: 'Offline Scan'
+            });
+            localStorage.setItem('offlineQRScans', JSON.stringify(offlineScans));
+            
+            showNotification('Scan Saved Offline', 
+                'QR scan saved locally. Will sync when back online.<br>' +
+                '<span class="text-2xs">Offline scans: ' + offlineScans.length + '</span>', 
+                'info');
+        }
+        
+        // Call original function
+        if (originalQRProcess) {
+            originalQRProcess(data);
+        }
+    } catch (error) {
+        console.error('Offline QR processing error:', error);
+    }
+};
+</script>
+
+</body>
+
+</html>

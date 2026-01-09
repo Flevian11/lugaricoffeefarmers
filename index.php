@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lugari Coffee Platform • Transform Your Coffee Farming</title>
+    <meta name="description" content="AI-powered platform for Lugari coffee farmers. Track, trace, and grow better coffee with market intelligence, farm advisory, and financial services.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/2615.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#fef7ec',
+                            100: '#fdeed9',
+                            200: '#fbddb3',
+                            300: '#f9cc8d',
+                            400: '#f7bb67',
+                            500: '#8B4513',
+                            600: '#6d3610',
+                            700: '#4f280c',
+                            800: '#311907',
+                            900: '#130903',
+                        },
+                        secondary: {
+                            50: '#f0f9f0',
+                            100: '#daf3da',
+                            200: '#b5e7b5',
+                            300: '#90db90',
+                            400: '#6bcf6b',
+                            500: '#2E8B57',
+                            600: '#256f46',
+                            700: '#1c5334',
+                            800: '#133723',
+                            900: '#0a1b11',
+                        },
+                        accent: {
+                            500: '#D2691E',
+                        }
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'bean-float': 'beanFloat 8s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        beanFloat: {
+                            '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+                            '33%': { transform: 'translateY(-20px) rotate(120deg)' },
+                            '66%': { transform: 'translateY(-10px) rotate(240deg)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary: #8B4513;
+            --secondary: #2E8B57;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.1) 0%, rgba(46, 139, 87, 0.1) 100%);
+        }
+        
+        .section-bg {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238B4513' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.1);
+        }
+        
+        .coffee-bean {
+            background: radial-gradient(circle at 30% 30%, #8B4513, #5D4037);
+            border-radius: 40% 60% 60% 40% / 70% 50% 50% 30%;
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+            backdrop-filter: blur(10px);
+        }
+        
+        .cta-gradient {
+            background: linear-gradient(135deg, #8B4513 0%, #2E8B57 100%);
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .dark .nav-blur {
+            background: rgba(15, 23, 42, 0.9);
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-stack {
+                flex-direction: column !important;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #8B4513, #2E8B57);
+            border-radius: 4px;
+        }
+        
+        /* Selection */
+        ::selection {
+            background: rgba(139, 69, 19, 0.2);
+            color: #1e293b;
+        }
+    </style>
+</head>
+<body class="text-gray-800 bg-white section-bg">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 nav-blur border-b border-gray-100 dark:border-gray-800">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-seedling text-white"></i>
+                    </div>
+                    <div>
+                        <div class="text-xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">Lugari Coffee Platform</div>
+                        <div class="text-xs text-gray-500">Farm Smart, Grow Better</div>
+                    </div>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Features</a>
+                    <a href="#how-it-works" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">How It Works</a>
+                    <a href="#testimonials" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Success Stories</a>
+                    <a href="#pricing" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Pricing</a>
+                    <a href="dashboard.php" class="px-6 py-2 bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-lg transition-colors">Dashboard Demo</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden p-2">
+                    <i class="fas fa-bars text-gray-600 text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 border-t border-gray-100 pt-4">
+                <div class="flex flex-col space-y-4">
+                    <a href="#features" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Features</a>
+                    <a href="#how-it-works" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">How It Works</a>
+                    <a href="#testimonials" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Success Stories</a>
+                    <a href="#pricing" class="text-gray-600 hover:text-primary-600 font-medium transition-colors">Pricing</a>
+                    <a href="dashboard.php" class="px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-lg transition-colors text-center">Dashboard Demo</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-20 md:pt-32 md:pb-28 hero-gradient">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center justify-between">
+                <!-- Left Column -->
+                <div class="lg:w-1/2 mb-12 lg:mb-0 animate-fade-in">
+                    <div class="inline-flex items-center px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-sm font-medium mb-6">
+                        <i class="fas fa-star mr-2"></i> Trusted by 1,200+ Lugari Farmers
+                    </div>
+                    
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+                        Transform Your 
+                        <span class="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">Coffee Farming</span>
+                        with AI
+                    </h1>
+                    
+                    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                        From farm to market, our platform helps Lugari coffee farmers track, trace, and grow better coffee. 
+                        Get real-time market prices, AI-powered farm advice, and financial services all in one place.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#register" class="px-8 py-4 cta-gradient text-white font-semibold rounded-xl hover:opacity-90 transition-opacity text-center shadow-lg">
+                            <i class="fas fa-user-plus mr-2"></i> Join Free for 30 Days
+                        </a>
+                        <a href="#features" class="px-8 py-4 border-2 border-primary-500 text-primary-600 font-semibold rounded-xl hover:bg-primary-50 transition-colors text-center">
+                            <i class="fas fa-play-circle mr-2"></i> Watch Demo (2 min)
+                        </a>
+                    </div>
+                    
+                    <div class="mt-8 flex items-center space-x-6">
+                        <div class="flex items-center">
+                            <div class="flex -space-x-2">
+                                <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full border-2 border-white"></div>
+                                <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full border-2 border-white"></div>
+                                <div class="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full border-2 border-white"></div>
+                            </div>
+                            <div class="ml-3">
+                                <div class="text-sm font-semibold">1,200+ Active Farmers</div>
+                                <div class="text-xs text-gray-500">Joined this season</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Hero Visual -->
+                <div class="lg:w-1/2 relative">
+                    <div class="relative animate-float">
+                        <!-- Main Dashboard Preview -->
+                        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
+                            <div class="bg-gradient-to-r from-primary-500 to-secondary-500 p-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-seedling text-white"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-semibold text-white">Lugari Coffee Dashboard</div>
+                                            <div class="text-xs text-primary-100">Live Preview</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                                        <div class="w-3 h-3 bg-amber-400 rounded-full"></div>
+                                        <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div class="bg-primary-50 rounded-xl p-4">
+                                        <div class="text-2xl font-bold text-primary-600">KSh 520</div>
+                                        <div class="text-sm text-gray-600">Current Price/kg</div>
+                                    </div>
+                                    <div class="bg-secondary-50 rounded-xl p-4">
+                                        <div class="text-2xl font-bold text-secondary-600">850 kg</div>
+                                        <div class="text-sm text-gray-600">Season Yield</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center mr-3">
+                                                <i class="fas fa-map text-primary-600"></i>
+                                            </div>
+                                            <span class="font-medium">Farm Mapping</span>
+                                        </div>
+                                        <span class="text-sm text-green-600 font-semibold">Active</span>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 bg-secondary-100 rounded-lg flex items-center justify-center mr-3">
+                                                <i class="fas fa-robot text-secondary-600"></i>
+                                            </div>
+                                            <span class="font-medium">Sovret AI Advisor</span>
+                                        </div>
+                                        <span class="text-sm text-green-600 font-semibold">Online</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating Elements -->
+                        <div class="absolute -top-6 -right-6 w-24 h-24 coffee-bean animate-bean-float"></div>
+                        <div class="absolute -bottom-8 -left-8 w-32 h-32 coffee-bean animate-bean-float" style="animation-delay: -2s;"></div>
+                        
+                        <!-- Stats Badge -->
+                        <div class="absolute -bottom-4 right-10 bg-white rounded-xl shadow-lg p-4 border border-gray-200">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-primary-600">+35%</div>
+                                <div class="text-sm text-gray-600">Average Yield Increase</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <div class="inline-flex items-center px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-sm font-medium mb-4">
+                    <i class="fas fa-bolt mr-2"></i> Everything You Need
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                    Complete Platform for 
+                    <span class="text-primary-600">Modern Coffee Farmers</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    We combine technology with traditional farming wisdom to give you an unfair advantage
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white rounded-2xl p-8 feature-card animate-slide-up" style="animation-delay: 0.1s;">
+                    <div class="w-14 h-14 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-qrcode text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">QR Farm Mapping & Traceability</h3>
+                    <p class="text-gray-600 mb-6">
+                        Scan QR codes to track every coffee batch from your farm to the final buyer. 
+                        Build trust and get premium prices with full transparency.
+                    </p>
+                    <div class="flex items-center text-primary-600 font-medium">
+                        <span>Like TraceX works</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="bg-white rounded-2xl p-8 feature-card animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-truck-loading text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Supply Chain Tracker</h3>
+                    <p class="text-gray-600 mb-6">
+                        Real-time tracking of your coffee through washing, drying, milling, and delivery. 
+                        Never lose track of your harvest again.
+                    </p>
+                    <div class="flex items-center text-primary-600 font-medium">
+                        <span>Like TrackBatch works</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="bg-white rounded-2xl p-8 feature-card animate-slide-up" style="animation-delay: 0.3s;">
+                    <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-robot text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Sovret AI Farm Advisor</h3>
+                    <p class="text-gray-600 mb-6">
+                        24/7 AI assistant for weather advice, pest control, and best farming practices. 
+                        Get personalized recommendations for your specific farm conditions.
+                    </p>
+                    <div class="flex items-center text-primary-600 font-medium">
+                        <span>Like Croppie & Yara Coffee</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="bg-white rounded-2xl p-8 feature-card animate-slide-up" style="animation-delay: 0.4s;">
+                    <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-line text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Live Market Prices</h3>
+                    <p class="text-gray-600 mb-6">
+                        Real-time Nairobi Coffee Exchange prices with ML predictions. 
+                        Know exactly when to sell for maximum profit.
+                    </p>
+                    <div class="flex items-center text-primary-600 font-medium">
+                        <span>Like e-Granary works</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="bg-white rounded-2xl p-8 feature-card animate-slide-up" style="animation-delay: 0.5s;">
+                    <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-mobile-alt text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">USSD & M-Pesa Integration</h3>
+                    <p class="text-gray-600 mb-6">
+                        Access all features via USSD *384*765#. 
+                        Auto-fill M-Pesa details with Safaricom Identity API for seamless registration.
+                    </p>
+                    <div class="flex items-center text-primary-600 font-medium">
+                        <span>Works on Any Phone</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="bg-white rounded-2xl p-8 feature-card animate-slide-up" style="animation-delay: 0.6s;">
+                    <div class="w-14 h-14 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fab fa-whatsapp text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">WhatsApp Registration Bot</h3>
+                    <p class="text-gray-600 mb-6">
+                        Register, ask questions, and get support via WhatsApp. 
+                        Perfect for farmers who prefer messaging over apps.
+                    </p>
+                    <div class="flex items-center text-primary-600 font-medium">
+                        <span>24/7 Automated Support</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <div class="inline-flex items-center px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-sm font-medium mb-4">
+                    <i class="fas fa-play-circle mr-2"></i> Simple 3-Step Process
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                    Start Growing Smarter in 
+                    <span class="text-primary-600">5 Minutes</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    No technical skills needed. Works on smartphone, feature phone, or computer.
+                </p>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row items-center justify-between">
+                <!-- Steps -->
+                <div class="lg:w-1/2 space-y-12">
+                    <!-- Step 1 -->
+                    <div class="flex animate-slide-up">
+                        <div class="flex-shrink-0">
+                            <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                                1
+                            </div>
+                        </div>
+                        <div class="ml-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Register via WhatsApp or USSD</h3>
+                            <p class="text-gray-600 mb-4">
+                                Message our WhatsApp bot or dial *384*765#. 
+                                Your M-Pesa number auto-fills using Safaricom's API. 
+                                Takes 2 minutes, no paperwork.
+                            </p>
+                            <div class="flex space-x-4">
+                                <div class="px-4 py-2 bg-green-50 text-green-700 rounded-lg font-medium">
+                                    <i class="fab fa-whatsapp mr-2"></i> WhatsApp
+                                </div>
+                                <div class="px-4 py-2 bg-purple-50 text-purple-700 rounded-lg font-medium">
+                                    <i class="fas fa-mobile-alt mr-2"></i> USSD
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="flex animate-slide-up" style="animation-delay: 0.2s;">
+                        <div class="flex-shrink-0">
+                            <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                                2
+                            </div>
+                        </div>
+                        <div class="ml-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Set Up Your Farm Profile</h3>
+                            <p class="text-gray-600 mb-4">
+                                Add your farm details, coffee varieties, and acreage. 
+                                Generate QR codes for traceability. 
+                                Get your personalized dashboard.
+                            </p>
+                            <div class="flex space-x-4">
+                                <div class="px-4 py-2 bg-primary-50 text-primary-700 rounded-lg font-medium">
+                                    <i class="fas fa-qrcode mr-2"></i> QR Codes
+                                </div>
+                                <div class="px-4 py-2 bg-blue-50 text-blue-700 rounded-lg font-medium">
+                                    <i class="fas fa-map mr-2"></i> Farm Mapping
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="flex animate-slide-up" style="animation-delay: 0.4s;">
+                        <div class="flex-shrink-0">
+                            <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                                3
+                            </div>
+                        </div>
+                        <div class="ml-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Start Using AI Features</h3>
+                            <p class="text-gray-600 mb-4">
+                                Access market prices, weather forecasts, AI advice, 
+                                and track your coffee through the supply chain. 
+                                All from your phone or computer.
+                            </p>
+                            <div class="flex space-x-4">
+                                <div class="px-4 py-2 bg-secondary-50 text-secondary-700 rounded-lg font-medium">
+                                    <i class="fas fa-robot mr-2"></i> Sovret AI
+                                </div>
+                                <div class="px-4 py-2 bg-amber-50 text-amber-700 rounded-lg font-medium">
+                                    <i class="fas fa-chart-line mr-2"></i> Market Intel
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visual -->
+                <div class="lg:w-2/5 mt-12 lg:mt-0">
+                    <div class="relative">
+                        <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
+                            <div class="text-center mb-8">
+                                <div class="w-20 h-20 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-mobile-alt text-white text-3xl"></i>
+                                </div>
+                                <h4 class="text-xl font-bold text-gray-900">Access Anywhere</h4>
+                                <p class="text-gray-600">Smartphone, computer, or feature phone</p>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-center p-4 bg-gray-50 rounded-xl">
+                                    <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-robot text-primary-600"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold">Sovret AI Assistant</div>
+                                        <div class="text-sm text-gray-500">24/7 farming advice</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center p-4 bg-gray-50 rounded-xl">
+                                    <div class="w-12 h-12 bg-secondary-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-chart-line text-secondary-600"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold">Live Market Prices</div>
+                                        <div class="text-sm text-gray-500">NCE + ML predictions</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center p-4 bg-gray-50 rounded-xl">
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-truck text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold">Supply Chain Tracker</div>
+                                        <div class="text-sm text-gray-500">Real-time updates</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8 pt-6 border-t border-gray-200 text-center">
+                                <div class="text-sm text-gray-500 mb-2">Scan to try demo</div>
+                                <div id="demoQR" class="inline-block p-4 bg-white border border-gray-300 rounded-lg"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating Badge -->
+                        <div class="absolute -top-4 -right-4 bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-2 rounded-xl shadow-lg">
+                            <div class="font-bold">FREE</div>
+                            <div class="text-xs">30-Day Trial</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <div class="inline-flex items-center px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-sm font-medium mb-4">
+                    <i class="fas fa-heart mr-2"></i> Real Farmers, Real Results
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                    Join <span class="text-primary-600">1,200+ Lugari Farmers</span> 
+                    Who Transformed Their Harvest
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    See how farmers like you increased yields, got better prices, and grew their income
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card rounded-2xl p-8 border border-gray-200 shadow-sm animate-slide-up">
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                            JM
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-900">Joseph Mwangi</h4>
+                            <div class="text-sm text-gray-500">2.4 Ha • SL-28 • Lugari</div>
+                            <div class="flex text-amber-400 mt-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-6 italic">
+                        "The Sovret AI advisor warned me about coffee berry borer before I even saw them. 
+                        I treated early and saved 80% of my crop. This season, my yield increased by 35%!"
+                    </p>
+                    
+                    <div class="pt-6 border-t border-gray-100">
+                        <div class="flex justify-between">
+                            <div>
+                                <div class="text-2xl font-bold text-primary-600">+35%</div>
+                                <div class="text-sm text-gray-500">Yield Increase</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-secondary-600">KSh 210k</div>
+                                <div class="text-sm text-gray-500">Extra Income</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card rounded-2xl p-8 border border-gray-200 shadow-sm animate-slide-up" style="animation-delay: 0.1s;">
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                            WK
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-900">Wangari Kariuki</h4>
+                            <div class="text-sm text-gray-500">1.8 Ha • Ruiru 11 • Matete</div>
+                            <div class="flex text-amber-400 mt-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-6 italic">
+                        "The market price alerts helped me sell at KSh 520/kg instead of KSh 450. 
+                        The QR traceability got me a premium buyer from Europe. Life-changing!"
+                    </p>
+                    
+                    <div class="pt-6 border-t border-gray-100">
+                        <div class="flex justify-between">
+                            <div>
+                                <div class="text-2xl font-bold text-primary-600">+15%</div>
+                                <div class="text-sm text-gray-500">Better Price</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-secondary-600">Direct</div>
+                                <div class="text-sm text-gray-500">European Buyer</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card rounded-2xl p-8 border border-gray-200 shadow-sm animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                            JO
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-900">James Omondi</h4>
+                            <div class="text-sm text-gray-500">3.2 Ha • Batian • Chekalini</div>
+                            <div class="flex text-amber-400 mt-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-6 italic">
+                        "I only have a feature phone. The USSD service works perfectly! 
+                        I check prices, get weather alerts, and even applied for a loan through *384*765#."
+                    </p>
+                    
+                    <div class="pt-6 border-t border-gray-100">
+                        <div class="flex justify-between">
+                            <div>
+                                <div class="text-2xl font-bold text-primary-600">KSh 75k</div>
+                                <div class="text-sm text-gray-500">Farm Loan</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-secondary-600">USSD</div>
+                                <div class="text-sm text-gray-500">Feature Phone User</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats Bar -->
+            <div class="mt-16 bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-bold text-primary-600 mb-2">1,200+</div>
+                        <div class="text-gray-600">Active Farmers</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-bold text-secondary-600 mb-2">35%</div>
+                        <div class="text-gray-600">Avg. Yield Increase</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-bold text-accent-500 mb-2">KSh 280M+</div>
+                        <div class="text-gray-600">Coffee Tracked</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-bold text-blue-600 mb-2">4.8/5</div>
+                        <div class="text-gray-600">Farmer Rating</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in">
+                <div class="inline-flex items-center px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-sm font-medium mb-4">
+                    <i class="fas fa-tag mr-2"></i> Simple, Transparent Pricing
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                    Free for Small Farms, 
+                    <span class="text-primary-600">Fair for Everyone</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Pay only when you benefit. No contracts, cancel anytime.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Free Tier -->
+                <div class="bg-white rounded-2xl p-8 border-2 border-gray-200 animate-slide-up">
+                    <div class="text-center mb-8">
+                        <div class="inline-flex px-4 py-1 bg-primary-50 text-primary-700 rounded-full text-sm font-medium mb-4">
+                            Perfect for Starters
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Free Forever</h3>
+                        <div class="text-4xl font-bold text-gray-900 mb-2">KSh 0</div>
+                        <div class="text-gray-500">per month</div>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Basic Farm Profile</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Market Price Alerts</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Weather Forecasts</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>USSD Access</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>WhatsApp Bot</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-times mr-3"></i>
+                            <span>AI Farm Advisor</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-times mr-3"></i>
+                            <span>Supply Chain Tracking</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="#register" class="block w-full py-3 border-2 border-primary-500 text-primary-600 font-semibold rounded-xl hover:bg-primary-50 transition-colors text-center">
+                        Start Free
+                    </a>
+                </div>
+                
+                <!-- Popular Tier -->
+                <div class="bg-white rounded-2xl p-8 border-2 border-primary-500 shadow-xl relative animate-slide-up" style="animation-delay: 0.1s;">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                        <div class="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-1 rounded-full text-sm font-semibold">
+                            MOST POPULAR
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mb-8">
+                        <div class="inline-flex px-4 py-1 bg-secondary-50 text-secondary-700 rounded-full text-sm font-medium mb-4">
+                            For Serious Farmers
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Smart Farmer</h3>
+                        <div class="text-4xl font-bold text-gray-900 mb-2">Ksh 500</div>
+                        <div class="text-gray-500">per month • 1% of extra income</div>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span><strong>Everything in Free</strong></span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Sovret AI Farm Advisor</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Supply Chain Tracking</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>QR Traceability</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Market Price Predictions</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Priority Support</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Loan & Insurance Access</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="#register" class="block w-full py-3 cta-gradient text-white font-semibold rounded-xl hover:opacity-90 transition-opacity text-center shadow-lg">
+                        Start 30-Day Free Trial
+                    </a>
+                    
+                    <div class="text-center mt-4 text-sm text-gray-500">
+                        Free for first 30 days, then Ksh 500/month
+                    </div>
+                </div>
+                
+                <!-- Cooperative Tier -->
+                <div class="bg-white rounded-2xl p-8 border-2 border-gray-200 animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="text-center mb-8">
+                        <div class="inline-flex px-4 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium mb-4">
+                            For Cooperatives
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Cooperative Pro</h3>
+                        <div class="text-4xl font-bold text-gray-900 mb-2">Custom</div>
+                        <div class="text-gray-500">volume-based pricing</div>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span><strong>Everything in Smart Farmer</strong></span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Bulk Member Management</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Cooperative Dashboard</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Export & Logistics Tools</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Dedicated Account Manager</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>API Access</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Training & Onboarding</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="#contact" class="block w-full py-3 border-2 border-blue-500 text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-colors text-center">
+                        Contact for Quote
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Guarantee -->
+            <div class="mt-12 text-center max-w-3xl mx-auto">
+                <div class="inline-flex items-center p-4 bg-green-50 rounded-2xl">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-shield-alt text-green-600"></i>
+                    </div>
+                    <div class="text-left">
+                        <div class="font-bold text-gray-900">30-Day Money-Back Guarantee</div>
+                        <div class="text-gray-600">If you don't increase your yield or get better prices, we'll refund 100% of your payment.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="register" class="py-20 cta-gradient text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center animate-fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                    Ready to Transform Your Coffee Farming?
+                </h2>
+                <p class="text-xl opacity-90 mb-10 max-w-2xl mx-auto">
+                    Join 1,200+ Lugari farmers who are already growing smarter, 
+                    getting better prices, and building sustainable futures.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                        <div class="text-3xl font-bold mb-2">100% Free</div>
+                        <div class="opacity-90">No credit card needed</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                        <div class="text-3xl font-bold mb-2">5 Min Setup</div>
+                        <div class="opacity-90">Via WhatsApp or USSD</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                        <div class="text-3xl font-bold mb-2">30-Day Trial</div>
+                        <div class="opacity-90">Full premium features</div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="https://wa.me/254700123456?text=Hi!%20I%20want%20to%20register%20as%20a%20Lugari%20coffee%20farmer" 
+                       target="_blank"
+                       class="px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl transition-colors flex items-center justify-center">
+                        <i class="fab fa-whatsapp text-2xl mr-3"></i>
+                        <div class="text-left">
+                            <div class="font-bold">Register via WhatsApp</div>
+                            <div class="text-sm opacity-90">Chat with our bot</div>
+                        </div>
+                    </a>
+                    
+                    <a href="dashboard.php" 
+                       class="px-8 py-4 bg-white text-primary-600 hover:bg-gray-100 font-semibold rounded-xl transition-colors flex items-center justify-center">
+                        <i class="fas fa-desktop text-2xl mr-3"></i>
+                        <div class="text-left">
+                            <div class="font-bold">Try Dashboard Demo</div>
+                            <div class="text-sm opacity-90">No registration needed</div>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="mt-8 text-sm opacity-80">
+                    Or dial <code class="bg-black/20 px-2 py-1 rounded">*384*765#</code> from your phone (any network)
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company -->
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <div>
+                            <div class="text-xl font-bold">Lugari Coffee Platform</div>
+                            <div class="text-sm text-gray-400">Farm Smart, Grow Better</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Empowering Lugari coffee farmers with AI, market intelligence, and traceability technology since 2023.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Platform</h4>
+                    <ul class="space-y-3">
+                        <li><a href="dashboard.php" class="text-gray-400 hover:text-white transition-colors">Dashboard Demo</a></li>
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#how-it-works" class="text-gray-400 hover:text-white transition-colors">How It Works</a></li>
+                        <li><a href="#pricing" class="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">API Documentation</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Resources -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Farming Guides</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Market Reports</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Webinars</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Contact & Support</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-phone mr-3"></i>
+                            <span>+254 700 123 456</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fab fa-whatsapp mr-3"></i>
+                            <span>WhatsApp Support</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-envelope mr-3"></i>
+                            <span>support@lugaricoffee.co.ke</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-map-marker-alt mr-3"></i>
+                            <span>Lugari, Kakamega County</span>
+                        </li>
+                    </ul>
+                    <div class="mt-6 p-4 bg-gray-800 rounded-lg">
+                        <div class="text-sm font-bold mb-2">USSD Code</div>
+                        <div class="text-2xl font-mono font-bold">*384*765#</div>
+                        <div class="text-xs text-gray-400 mt-1">Works on all networks</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-400">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div>
+                        © 2024 Lugari Coffee Farmers Platform. All rights reserved.
+                    </div>
+                    <div class="mt-4 md:mt-0">
+                        <a href="#" class="text-gray-400 hover:text-white mx-3">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white mx-3">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-white mx-3">Cookie Policy</a>
+                    </div>
+                </div>
+                <div class="mt-4 text-sm">
+                    In partnership with Nairobi Coffee Exchange, Safaricom, and Kenya Agricultural Research Institute
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script>
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Landing page loaded');
+        
+        // Generate demo QR code
+        const demoQR = document.getElementById('demoQR');
+        if (demoQR) {
+            try {
+                QRCode.toCanvas(demoQR, 'https://lugaricoffee.co.ke/demo', {
+                    width: 120,
+                    height: 120,
+                    margin: 1,
+                    color: {
+                        dark: '#8B4513',
+                        light: '#FFFFFF'
+                    }
+                });
+                console.log('QR code generated');
+            } catch (error) {
+                console.log('QR Code generation error:', error);
+                // Fallback if QR code fails
+                demoQR.innerHTML = '<div class="text-center p-4"><div class="text-lg font-bold text-primary-600">DEMO</div><div class="text-sm">Scan to try</div></div>';
+            }
+        }
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                mobileMenu.classList.toggle('hidden');
+                // Toggle icon
+                const icon = mobileMenuButton.querySelector('i');
+                if (icon) {
+                    if (mobileMenu.classList.contains('hidden')) {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    } else {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    }
+                }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                    mobileMenu.classList.add('hidden');
+                    const icon = mobileMenuButton.querySelector('i');
+                    if (icon) {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                }
+            });
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#' || targetId === '#!') return;
+                
+                e.preventDefault();
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Close mobile menu if open
+                    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                        const icon = mobileMenuButton.querySelector('i');
+                        if (icon) {
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+                        }
+                    }
+                    
+                    // Scroll to target
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update URL without page reload
+                    history.pushState(null, null, targetId);
+                }
+            });
+        });
+        
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all sections with animations
+        document.querySelectorAll('section, .animate-slide-up').forEach(element => {
+            observer.observe(element);
+        });
+        
+        // USSD code highlight and copy
+        const ussdCode = document.querySelector('code');
+        if (ussdCode) {
+            ussdCode.style.cursor = 'pointer';
+            ussdCode.title = 'Click to copy';
+            ussdCode.addEventListener('click', function() {
+                const text = this.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = this.textContent;
+                    this.textContent = 'Copied!';
+                    this.classList.add('bg-green-500', 'text-white');
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.classList.remove('bg-green-500', 'text-white');
+                    }, 2000);
+                    
+                    // Show notification
+                    showNotification('USSD Code Copied', `"${text}" copied to clipboard`, 'success');
+                }).catch(err => {
+                    console.log('Failed to copy: ', err);
+                });
+            });
+        }
+        
+        // WhatsApp registration tracking
+        const whatsappLinks = document.querySelectorAll('a[href*="whatsapp"]');
+        whatsappLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Don't prevent default - let it open WhatsApp
+                // Track conversion event
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'whatsapp_registration', {
+                        'event_category': 'conversion',
+                        'event_label': 'landing_page'
+                    });
+                }
+                
+                // Show loading state
+                const originalHTML = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Opening WhatsApp...';
+                setTimeout(() => {
+                    this.innerHTML = originalHTML;
+                }, 2000);
+            });
+        });
+        
+        // Dashboard demo button
+        const dashboardButtons = document.querySelectorAll('a[href="dashboard.php"]');
+        dashboardButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (!this.getAttribute('target') || this.getAttribute('target') !== '_blank') {
+                    e.preventDefault();
+                    // Show loading
+                    const originalHTML = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Loading Dashboard...';
+                    
+                    // Simulate loading
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.php';
+                    }, 1000);
+                }
+            });
+        });
+        
+        // Form submissions (if any forms are added later)
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Get form data
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData);
+                
+                // Simulate form submission
+                const submitButton = this.querySelector('button[type="submit"]');
+                if (submitButton) {
+                    const originalText = submitButton.textContent;
+                    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+                    submitButton.disabled = true;
+                    
+                    setTimeout(() => {
+                        submitButton.innerHTML = '<i class="fas fa-check mr-2"></i> Submitted!';
+                        showNotification('Form Submitted', 'Thank you for your interest! We\'ll contact you soon.', 'success');
+                        
+                        // Reset form after 2 seconds
+                        setTimeout(() => {
+                            this.reset();
+                            submitButton.textContent = originalText;
+                            submitButton.disabled = false;
+                        }, 2000);
+                    }, 1500);
+                }
+            });
+        });
+        
+        // Register button handlers
+        const registerButtons = document.querySelectorAll('a[href="#register"], .cta-gradient');
+        registerButtons.forEach(button => {
+            if (!button.getAttribute('href') || button.getAttribute('href') === '#register') {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const registerSection = document.getElementById('register');
+                    if (registerSection) {
+                        registerSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            }
+        });
+        
+        // Watch demo video button
+        const watchDemoButtons = document.querySelectorAll('a:contains("Watch Demo")');
+        watchDemoButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (this.getAttribute('href') === '#features') {
+                    e.preventDefault();
+                    const featuresSection = document.getElementById('features');
+                    if (featuresSection) {
+                        featuresSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+        
+        // Notification system
+        function showNotification(title, message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-6 right-6 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-4 z-50 border border-gray-200 dark:border-gray-700 max-w-sm animate-slide-up`;
+            notification.style.transition = 'all 0.3s ease';
+
+            let icon = 'info-circle';
+            let iconColor = 'primary-500';
+
+            switch (type) {
+                case 'success':
+                    icon = 'check-circle';
+                    iconColor = 'green-500';
+                    break;
+                case 'error':
+                    icon = 'exclamation-circle';
+                    iconColor = 'red-500';
+                    break;
+                case 'warning':
+                    icon = 'exclamation-triangle';
+                    iconColor = 'amber-500';
+                    break;
+            }
+
+            notification.innerHTML = `
+                <div class="flex space-x-3">
+                    <div class="w-10 h-10 bg-${iconColor} rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-${icon} text-white"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h4 class="text-sm font-semibold text-gray-900 dark:text-white mb-1">${title}</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">${message}</p>
+                        <div class="text-2xs text-gray-500 dark:text-gray-400 mt-2">Just now</div>
+                    </div>
+                    <button class="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors self-start close-notification">
+                        <i class="fas fa-times text-gray-400"></i>
+                    </button>
+                </div>
+            `;
+
+            document.body.appendChild(notification);
+
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 300);
+                }
+            }, 5000);
+
+            // Close button
+            notification.querySelector('.close-notification').addEventListener('click', () => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            });
+        }
+        
+        // Initialize some sample notifications
+        setTimeout(() => {
+            showNotification('Welcome to Lugari Coffee Platform', 'Transform your coffee farming with AI-powered tools', 'success');
+        }, 1500);
+        
+        // Counter animation
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target.toLocaleString();
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start).toLocaleString();
+                }
+            }, 16);
+        }
+        
+        // Initialize counters when stats are visible
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const stats = entry.target.querySelectorAll('.text-3xl, .text-4xl');
+                    stats.forEach(stat => {
+                        const text = stat.textContent;
+                        const match = text.match(/(\d+\.?\d*)/);
+                        if (match) {
+                            const target = parseFloat(match[1]);
+                            if (!isNaN(target)) {
+                                stat.classList.add('counting');
+                                animateCounter(stat, target);
+                            }
+                        }
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        // Observe stats bar
+        const statsBar = document.querySelector('.bg-white.rounded-2xl.p-8');
+        if (statsBar) {
+            statsObserver.observe(statsBar);
+        }
+        
+        // Testimonial hover effects
+        const testimonialCards = document.querySelectorAll('.testimonial-card');
+        testimonialCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-5px)';
+                card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.1)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = '';
+            });
+        });
+        
+        // Feature card animations
+        const featureCards = document.querySelectorAll('.feature-card');
+        featureCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px)';
+                card.style.boxShadow = '0 20px 40px rgba(139, 69, 19, 0.1)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = '';
+            });
+        });
+        
+        // Back to top button (add if needed)
+        const backToTopButton = document.createElement('button');
+        backToTopButton.innerHTML = '<i class="fas fa-chevron-up"></i>';
+        backToTopButton.className = 'fixed bottom-6 right-6 w-12 h-12 bg-primary-500 hover:bg-primary-600 text-white rounded-full shadow-lg z-40 hidden transition-all';
+        backToTopButton.style.transition = 'all 0.3s ease';
+        document.body.appendChild(backToTopButton);
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('hidden');
+                backToTopButton.style.opacity = '1';
+                backToTopButton.style.transform = 'scale(1)';
+            } else {
+                backToTopButton.style.opacity = '0';
+                backToTopButton.style.transform = 'scale(0)';
+                setTimeout(() => {
+                    if (window.pageYOffset <= 300) {
+                        backToTopButton.classList.add('hidden');
+                    }
+                }, 300);
+            }
+        });
+        
+        // Add ripple effect to buttons
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple-effect');
+
+            button.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+        
+        // Add ripple to main CTA buttons
+        document.querySelectorAll('.cta-gradient, .bg-primary-500, .bg-green-500').forEach(button => {
+            button.addEventListener('click', createRipple);
+        });
+        
+        console.log('All JavaScript initialized successfully');
+    });
+    
+    // Make functions available globally
+    window.showNotification = function(title, message, type = 'info') {
+        // This function is now defined above
+    };
+</script>
+</body>
+</html>
